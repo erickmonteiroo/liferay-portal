@@ -71,9 +71,6 @@ definition {
 
 		CommerceEntry.gotoMenuTab(menuTab = "Media");
 
-		CommerceProductImages.addProductImages(
-			imageTitles = "Black",
-			validationImage = "true");
 	}
 
 	@description = "This is a test for COMMERCE-6028. AddAnImageToAnOption"
