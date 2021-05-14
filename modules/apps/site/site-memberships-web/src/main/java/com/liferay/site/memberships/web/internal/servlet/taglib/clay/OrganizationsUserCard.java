@@ -15,7 +15,7 @@
 package com.liferay.site.memberships.web.internal.servlet.taglib.clay;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.BaseBaseClayCard;
-import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
+import com.liferay.frontend.taglib.clay.servlet.taglib.soy.UserCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -35,10 +35,10 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Eudaldo Alonso
  */
-public class OrganizationsVerticalCard
-	extends BaseBaseClayCard implements VerticalCard {
+public class OrganizationsUserCard
+	extends BaseBaseClayCard implements UserCard {
 
-	public OrganizationsVerticalCard(
+	public OrganizationsUserCard(
 		Organization organization, boolean showActions,
 		RenderRequest renderRequest, RenderResponse renderResponse,
 		RowChecker rowChecker) {
@@ -83,17 +83,17 @@ public class OrganizationsVerticalCard
 	}
 
 	@Override
+	public String getName() {
+		return _organization.getName();
+	}
+
+	@Override
 	public String getSubtitle() {
 		return LanguageUtil.get(_httpServletRequest, _organization.getType());
 	}
 
-	@Override
-	public String getTitle() {
-		return _organization.getName();
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
-		OrganizationsVerticalCard.class);
+		OrganizationsUserCard.class);
 
 	private final HttpServletRequest _httpServletRequest;
 	private final Organization _organization;
