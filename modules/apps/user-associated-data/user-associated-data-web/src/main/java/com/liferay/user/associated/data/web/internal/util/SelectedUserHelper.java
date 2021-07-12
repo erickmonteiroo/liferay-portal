@@ -17,6 +17,7 @@ package com.liferay.user.associated.data.web.internal.util;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.user.associated.data.anonymizer.UADAnonymousUserProvider;
 
 import java.util.Objects;
 
@@ -41,7 +42,7 @@ public class SelectedUserHelper {
 				"The selected user cannot be the logged in user");
 		}
 
-		if (uadAnonymizerHelper.isAnonymousUser(selectedUser)) {
+		if (uadAnonymousUserProvider.isAnonymousUser(selectedUser)) {
 			throw new PortalException(
 				"The selected user cannot be the anonymous user");
 		}
@@ -61,6 +62,6 @@ public class SelectedUserHelper {
 	protected Portal portal;
 
 	@Reference
-	protected UADAnonymizerHelper uadAnonymizerHelper;
+	protected UADAnonymousUserProvider uadAnonymousUserProvider;
 
 }
