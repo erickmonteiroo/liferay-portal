@@ -191,6 +191,7 @@ public abstract class BaseAccountResourceTestCase {
 		account.setDescription(regex);
 		account.setExternalReferenceCode(regex);
 		account.setName(regex);
+		account.setType(regex);
 
 		String json = AccountSerDes.toJSON(account);
 
@@ -201,6 +202,7 @@ public abstract class BaseAccountResourceTestCase {
 		Assert.assertEquals(regex, account.getDescription());
 		Assert.assertEquals(regex, account.getExternalReferenceCode());
 		Assert.assertEquals(regex, account.getName());
+		Assert.assertEquals(regex, account.getType());
 	}
 
 	@Test
@@ -1082,6 +1084,14 @@ public abstract class BaseAccountResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("type", additionalAssertFieldName)) {
+				if (account.getType() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -1265,6 +1275,16 @@ public abstract class BaseAccountResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("type", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						account1.getType(), account2.getType())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -1414,6 +1434,14 @@ public abstract class BaseAccountResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("type")) {
+			sb.append("'");
+			sb.append(String.valueOf(account.getType()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
 	}
@@ -1466,6 +1494,7 @@ public abstract class BaseAccountResourceTestCase {
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				parentAccountId = RandomTestUtil.randomLong();
 				status = RandomTestUtil.randomInt();
+				type = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
 		};
 	}

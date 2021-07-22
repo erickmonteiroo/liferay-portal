@@ -314,6 +314,36 @@ public class Account implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer status;
 
+	@Schema(
+		description = "The account's type. This property will be ignored during PATCH and PUT requests. Valid types are 'business', 'guest' and 'person'."
+	)
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	@JsonIgnore
+	public void setType(UnsafeSupplier<String, Exception> typeUnsafeSupplier) {
+		try {
+			type = typeUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(
+		description = "The account's type. This property will be ignored during PATCH and PUT requests. Valid types are 'business', 'guest' and 'person'."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String type;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -465,6 +495,20 @@ public class Account implements Serializable {
 			sb.append("\"status\": ");
 
 			sb.append(status);
+		}
+
+		if (type != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"type\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(type));
+
+			sb.append("\"");
 		}
 
 		sb.append("}");
