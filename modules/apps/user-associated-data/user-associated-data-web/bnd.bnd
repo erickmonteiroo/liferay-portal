@@ -3,3 +3,4 @@ Bundle-SymbolicName: com.liferay.user.associated.data.web
 Bundle-Version: 6.0.10
 Web-ContextPath: /user-associated-data-web
 -dsannotations-options: inherit
+-liferay-aggregate-resource-bundles: com.liferay.user.associated.data.lang
