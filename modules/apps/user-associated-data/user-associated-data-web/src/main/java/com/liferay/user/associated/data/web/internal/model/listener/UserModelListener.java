@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.user.associated.data.web.internal.configuration.AnonymousUserConfigurationRetriever;
+import com.liferay.user.associated.data.configuration.AnonymousUserConfigurationRetriever;
 
 import java.io.IOException;
 

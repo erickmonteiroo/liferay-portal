@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.user.associated.data.anonymizer.UADAnonymousUserProvider;
 import com.liferay.user.associated.data.web.internal.configuration.AnonymousUserConfiguration;
-import com.liferay.user.associated.data.web.internal.configuration.AnonymousUserConfigurationRetriever;
+import com.liferay.user.associated.data.configuration.AnonymousUserConfigurationRetriever;
 
 import java.util.Calendar;
 import java.util.Dictionary;
