@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.user.associated.data.web.internal.configuration;
+package com.liferay.user.associated.data.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -25,7 +25,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	category = "users", scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
-	id = "com.liferay.user.associated.data.web.internal.configuration.AnonymousUserConfiguration",
+	id = "com.liferay.user.associated.data.configuration.AnonymousUserConfiguration",
 	localization = "content/Language",
 	name = "anonymous-user-configuration-name"
 )
