@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -52,6 +53,7 @@ import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -351,6 +353,40 @@ public class UserLocalServiceTest {
 	}
 
 	@Test
+	public void testSearchUserGroupUserInOrganizationSite() throws Exception {
+		Organization organization = OrganizationTestUtil.addOrganization(true);
+
+		Group organizationSite = _groupLocalService.getOrganizationGroup(
+			TestPropsValues.getCompanyId(), organization.getOrganizationId());
+
+		organizationSite.setManualMembership(true);
+
+		User user = UserTestUtil.addUser();
+
+		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
+
+		_userGroupLocalService.addUserUserGroup(user.getUserId(), userGroup);
+
+		_groupLocalService.addUserGroupGroup(
+			userGroup.getUserGroupId(), organizationSite);
+
+		List<User> searchResult = _userLocalService.search(
+			TestPropsValues.getCompanyId(), user.getFirstName(),
+			WorkflowConstants.STATUS_APPROVED,
+			LinkedHashMapBuilder.<String, Object>put(
+				"inherit", Boolean.TRUE
+			).put(
+				"usersGroups", organizationSite.getGroupId()
+			).build(),
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			(OrderByComparator<User>)null);
+
+		Assert.assertEquals(searchResult.toString(), 1, searchResult.size());
+
+		Assert.assertTrue(searchResult.contains(user));
+	}
+
+	@Test
 	public void testSearchUsersFromDatabase() throws Exception {
 		Field propsValuesField = ReflectionUtil.getDeclaredField(
 			PropsValues.class, "USERS_SEARCH_WITH_INDEX");
@@ -507,6 +543,9 @@ public class UserLocalServiceTest {
 
 	@Inject
 	private RoleLocalService _roleLocalService;
+
+	@Inject
+	private UserGroupLocalService _userGroupLocalService;
 
 	@Inject
 	private UserLocalService _userLocalService;
