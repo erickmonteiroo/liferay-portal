@@ -17,7 +17,6 @@ package com.liferay.user.associated.data.web.internal.upgrade;
 import com.liferay.portal.configuration.persistence.upgrade.ConfigurationUpgradeStepFactory;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-
 import com.liferay.user.associated.data.web.internal.configuration.AnonymousUserConfiguration;
 import com.liferay.user.associated.data.web.internal.upgrade.v1_0_0.ResourceActionUpgradeProcess;
 

@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -68,7 +67,6 @@ public class UADAnonymousUserProviderImpl implements UADAnonymousUserProvider {
 			return false;
 		}
 		catch (Exception exception) {
-
 			if (_log.isDebugEnabled()) {
 				_log.debug(exception, exception);
 			}
@@ -167,7 +165,8 @@ public class UADAnonymousUserProviderImpl implements UADAnonymousUserProvider {
 		return anonymousUser;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(UADAnonymousUserProvider.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		UADAnonymousUserProviderImpl.class);
 
 	@Reference
 	private AnonymousUserConfigurationRetriever
