@@ -33,12 +33,6 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface AnonymousUserConfiguration {
 
 	@Meta.AD(
-		deflt = "0", description = "company-id-description",
-		name = "company-id", required = false
-	)
-	public long companyId();
-
-	@Meta.AD(
 		deflt = "0", description = "user-id-description", name = "user-id",
 		required = false
 	)
