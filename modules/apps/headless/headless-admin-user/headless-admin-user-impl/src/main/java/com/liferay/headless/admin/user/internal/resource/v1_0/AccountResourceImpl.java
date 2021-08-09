@@ -182,8 +182,7 @@ public class AccountResourceImpl
 		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
 			contextUser.getUserId(), _getParentAccountId(account),
 			account.getName(), account.getDescription(), _getDomains(account),
-			null, null, null, AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
-			_getStatus(account), null);
+			null, null, null, _getType(account), _getStatus(account), null);
 
 		_accountEntryOrganizationRelLocalService.
 			setAccountEntryOrganizationRels(
@@ -239,8 +238,7 @@ public class AccountResourceImpl
 				externalReferenceCode, contextUser.getUserId(),
 				_getParentAccountId(account), account.getName(),
 				account.getDescription(), _getDomains(account), null, null,
-				null, AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
-				_getStatus(account), null));
+				null, _getType(account), _getStatus(account), null));
 	}
 
 	private Map<String, Map<String, String>> _getActions(Long accountEntryId) {
@@ -358,6 +356,14 @@ public class AccountResourceImpl
 			account.getStatus()
 		).orElse(
 			WorkflowConstants.STATUS_APPROVED
+		);
+	}
+
+	private String _getType(Account account) {
+		return Optional.ofNullable(
+			account.getType()
+		).orElse(
+			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS
 		);
 	}
 
