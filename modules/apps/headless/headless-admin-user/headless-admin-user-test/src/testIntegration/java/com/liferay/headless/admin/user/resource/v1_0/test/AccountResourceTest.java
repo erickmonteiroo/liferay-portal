@@ -330,7 +330,7 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"name"};
+		return new String[] {"name", "type"};
 	}
 
 	@Override
@@ -339,6 +339,8 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 
 		account.setParentAccountId(AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT);
 		account.setStatus(WorkflowConstants.STATUS_APPROVED);
+		account.setType(
+			Account.Type.create(AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS));
 
 		return account;
 	}

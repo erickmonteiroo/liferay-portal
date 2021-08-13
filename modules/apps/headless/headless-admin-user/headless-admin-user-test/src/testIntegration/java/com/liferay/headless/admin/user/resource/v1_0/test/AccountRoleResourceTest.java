@@ -697,6 +697,8 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				parentAccountId = RandomTestUtil.randomLong();
 				status = RandomTestUtil.randomInt();
+				type = Account.Type.create(
+					AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS);
 			}
 		};
 	}
