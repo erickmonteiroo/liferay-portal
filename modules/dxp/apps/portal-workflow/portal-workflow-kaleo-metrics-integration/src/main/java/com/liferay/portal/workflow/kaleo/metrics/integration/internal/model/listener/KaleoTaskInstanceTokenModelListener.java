@@ -88,7 +88,7 @@ public class KaleoTaskInstanceTokenModelListener
 	}
 
 	@Override
-	public void onAfterUpdate(KaleoTaskInstanceToken kaleoTaskInstanceToken)
+	public void onAfterUpdate(KaleoTaskInstanceToken originalKaleoTaskInstanceToken,KaleoTaskInstanceToken kaleoTaskInstanceToken)
 		throws ModelListenerException {
 
 		TransactionCommitCallbackUtil.registerCallback(

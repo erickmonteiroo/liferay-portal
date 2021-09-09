@@ -35,7 +35,7 @@ public class UserGroupRoleModelListener
 	}
 
 	@Override
-	public void onAfterUpdate(UserGroupRole userGroupRole) {
+	public void onAfterUpdate(UserGroupRole originalUserGroupRole,UserGroupRole userGroupRole) {
 		_clearCache(userGroupRole);
 	}
 
