@@ -42,8 +42,8 @@ public class DDMFormInstanceRecordVersionModelListener
 
 	@Override
 	public void onAfterUpdate(
-		DDMFormInstanceRecordVersion originalDdmFormInstanceRecordVersion,
-		DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion)
+			DDMFormInstanceRecordVersion originalDDMFormInstanceRecordVersion,
+			DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion)
 		throws ModelListenerException {
 
 		try {
@@ -71,8 +71,8 @@ public class DDMFormInstanceRecordVersionModelListener
 
 	@Override
 	public void onBeforeUpdate(
-		DDMFormInstanceRecordVersion originalDdmFormInstanceRecordVersion,
-		DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion)
+			DDMFormInstanceRecordVersion originalDDMFormInstanceRecordVersion,
+			DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion)
 		throws ModelListenerException {
 
 		try {

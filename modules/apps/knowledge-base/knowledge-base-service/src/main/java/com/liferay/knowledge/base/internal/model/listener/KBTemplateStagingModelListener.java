@@ -45,7 +45,8 @@ public class KBTemplateStagingModelListener
 	}
 
 	@Override
-	public void onAfterUpdate(KBTemplate originalKbTemplate,KBTemplate kbTemplate)
+	public void onAfterUpdate(
+			KBTemplate originalKBTemplate, KBTemplate kbTemplate)
 		throws ModelListenerException {
 
 		_stagingModelListener.onAfterUpdate(kbTemplate);

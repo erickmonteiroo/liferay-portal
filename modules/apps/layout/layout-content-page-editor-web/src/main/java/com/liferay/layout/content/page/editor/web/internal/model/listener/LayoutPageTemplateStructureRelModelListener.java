@@ -43,8 +43,9 @@ public class LayoutPageTemplateStructureRelModelListener
 
 	@Override
 	public void onAfterUpdate(
-		LayoutPageTemplateStructureRel originalLayoutPageTemplateStructureRel,
-		LayoutPageTemplateStructureRel layoutPageTemplateStructureRel)
+			LayoutPageTemplateStructureRel
+				originalLayoutPageTemplateStructureRel,
+			LayoutPageTemplateStructureRel layoutPageTemplateStructureRel)
 		throws ModelListenerException {
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =

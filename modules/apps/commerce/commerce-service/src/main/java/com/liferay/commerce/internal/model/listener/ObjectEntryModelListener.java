@@ -53,10 +53,11 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 	}
 
 	@Override
-	public void onAfterUpdate(ObjectEntry originalObjectEntry,ObjectEntry objectEntry)
+	public void onAfterUpdate(
+			ObjectEntry originalObjectEntry, ObjectEntry objectEntry)
 		throws ModelListenerException {
 
-		super.onAfterUpdate(originalObjectEntry,objectEntry);
+		super.onAfterUpdate(originalObjectEntry, objectEntry);
 
 		_sendNotifications("update", objectEntry);
 	}

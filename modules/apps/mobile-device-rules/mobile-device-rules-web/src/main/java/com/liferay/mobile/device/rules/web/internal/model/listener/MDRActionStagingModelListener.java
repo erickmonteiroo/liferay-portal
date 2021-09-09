@@ -45,7 +45,7 @@ public class MDRActionStagingModelListener
 	}
 
 	@Override
-	public void onAfterUpdate(MDRAction originalMdrAction,MDRAction mdrAction)
+	public void onAfterUpdate(MDRAction originalMDRAction, MDRAction mdrAction)
 		throws ModelListenerException {
 
 		_stagingModelListener.onAfterUpdate(mdrAction);
