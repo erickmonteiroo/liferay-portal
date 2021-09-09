@@ -130,7 +130,7 @@ public class KaleoTaskInstanceTokenModelListener
 	}
 
 	@Override
-	public void onBeforeUpdate(KaleoTaskInstanceToken kaleoTaskInstanceToken)
+	public void onBeforeUpdate(KaleoTaskInstanceToken originalKaleoTaskInstanceToken,KaleoTaskInstanceToken kaleoTaskInstanceToken)
 		throws ModelListenerException {
 
 		KaleoTaskInstanceToken currentKaleoTaskInstanceToken =

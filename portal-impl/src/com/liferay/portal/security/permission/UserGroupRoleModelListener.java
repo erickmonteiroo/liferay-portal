@@ -40,7 +40,7 @@ public class UserGroupRoleModelListener
 	}
 
 	@Override
-	public void onBeforeUpdate(UserGroupRole userGroupRole) {
+	public void onBeforeUpdate(UserGroupRole originalUserGroupRole,UserGroupRole userGroupRole) {
 		UserGroupRoleModelImpl userGroupRoleModelImpl =
 			(UserGroupRoleModelImpl)userGroupRole;
 
