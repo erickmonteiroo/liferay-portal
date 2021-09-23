@@ -273,8 +273,8 @@ public class AccountRoleLocalServiceImpl
 	@Override
 	public BaseModelSearchResult<AccountRole> searchAccountRoles(
 		long companyId, long[] accountEntryIds, String keywords,
-		LinkedHashMap<String, Object> params, int start,
-		int end, OrderByComparator<?> orderByComparator) {
+		LinkedHashMap<String, Object> params, int start, int end,
+		OrderByComparator<?> orderByComparator) {
 
 		if (params == null) {
 			params = new LinkedHashMap<>();
@@ -324,8 +324,7 @@ public class AccountRoleLocalServiceImpl
 
 		return searchAccountRoles(
 			CompanyThreadLocal.getCompanyId(), accountEntryIds, keywords, null,
-			start,
-			end, orderByComparator);
+			start, end, orderByComparator);
 	}
 
 	@Override
