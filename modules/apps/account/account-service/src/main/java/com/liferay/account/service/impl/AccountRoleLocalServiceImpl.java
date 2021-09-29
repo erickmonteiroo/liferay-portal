@@ -266,7 +266,7 @@ public class AccountRoleLocalServiceImpl
 		int end, OrderByComparator<?> orderByComparator) {
 
 		return searchAccountRoles(
-			companyId, new long[] {accountEntryId}, keywords, start, end,
+			companyId, new long[] {accountEntryId}, keywords, null, start, end,
 			orderByComparator);
 	}
 
@@ -319,7 +319,7 @@ public class AccountRoleLocalServiceImpl
 
 		return searchAccountRoles(
 			CompanyThreadLocal.getCompanyId(), new long[] {accountEntryId},
-			keywords, start, end, orderByComparator);
+			keywords, null, start, end, orderByComparator);
 	}
 
 	/**
@@ -332,7 +332,8 @@ public class AccountRoleLocalServiceImpl
 		OrderByComparator<?> orderByComparator) {
 
 		return searchAccountRoles(
-			CompanyThreadLocal.getCompanyId(), accountEntryIds, keywords, start,
+			CompanyThreadLocal.getCompanyId(), accountEntryIds, keywords, null,
+			start,
 			end, orderByComparator);
 	}
 

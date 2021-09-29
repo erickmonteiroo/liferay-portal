@@ -112,7 +112,7 @@ public class AccountRoleResourceImpl extends BaseAccountRoleResourceImpl {
 				new long[] {
 					AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, accountId
 				},
-				keywords, pagination.getStartPosition(),
+				keywords, null, pagination.getStartPosition(),
 				pagination.getEndPosition(), _getOrderByComparator(sorts));
 
 		return Page.of(
