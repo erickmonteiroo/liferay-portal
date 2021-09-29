@@ -272,15 +272,6 @@ public class AccountRoleLocalServiceImpl
 
 	@Override
 	public BaseModelSearchResult<AccountRole> searchAccountRoles(
-		long companyId, long[] accountEntryIds, String keywords, int start,
-		int end, OrderByComparator<?> orderByComparator) {
-
-		return searchAccountRoles(
-			companyId, accountEntryIds, keywords, null, start, end, orderByComparator);
-	}
-
-	@Override
-	public BaseModelSearchResult<AccountRole> searchAccountRoles(
 		long companyId, long[] accountEntryIds, String keywords,
 		LinkedHashMap<String, Object> params, int start,
 		int end, OrderByComparator<?> orderByComparator) {

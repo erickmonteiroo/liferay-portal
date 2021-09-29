@@ -357,16 +357,6 @@ public class AccountRoleLocalServiceUtil {
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
 		<AccountRole> searchAccountRoles(
-			long companyId, long[] accountEntryIds, String keywords, int start,
-			int end, OrderByComparator<?> orderByComparator) {
-
-		return getService().searchAccountRoles(
-			companyId, accountEntryIds, keywords, start, end,
-			orderByComparator);
-	}
-
-	public static com.liferay.portal.kernel.search.BaseModelSearchResult
-		<AccountRole> searchAccountRoles(
 			long companyId, long[] accountEntryIds, String keywords,
 			java.util.LinkedHashMap<String, Object> params, int start, int end,
 			OrderByComparator<?> orderByComparator) {

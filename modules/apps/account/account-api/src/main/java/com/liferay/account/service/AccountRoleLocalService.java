@@ -304,11 +304,6 @@ public interface AccountRoleLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<AccountRole> searchAccountRoles(
-		long companyId, long[] accountEntryIds, String keywords, int start,
-		int end, OrderByComparator<?> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BaseModelSearchResult<AccountRole> searchAccountRoles(
 		long companyId, long[] accountEntryIds, String keywords,
 		LinkedHashMap<String, Object> params, int start, int end,
 		OrderByComparator<?> orderByComparator);
