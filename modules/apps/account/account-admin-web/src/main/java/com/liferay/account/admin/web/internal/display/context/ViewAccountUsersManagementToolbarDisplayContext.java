@@ -30,6 +30,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.constants.LanguageConstants;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -99,6 +100,8 @@ public class ViewAccountUsersManagementToolbarDisplayContext
 			StringPool.BLANK
 		).setNavigation(
 			(String)null
+		).setParameter(
+			"orderByCol", LanguageConstants.VALUE_LAST_NAME
 		).buildString();
 	}
 
@@ -133,6 +136,23 @@ public class ViewAccountUsersManagementToolbarDisplayContext
 					LanguageUtil.get(httpServletRequest, getNavigation()));
 
 				labelItem.setLabel(label);
+			}
+		).add(
+			() -> !Objects.equals(getOrderByCol(), "last-name"),
+			labelItem -> {
+				labelItem.putData(
+					"removeLabelURL",
+					PortletURLBuilder.create(
+						getPortletURL()
+					).setParameter(
+						"orderByCol", (String)null
+					).buildString());
+				labelItem.setDismissible(true);
+				labelItem.setLabel(
+					String.format(
+						"%s: %s",
+						LanguageUtil.get(httpServletRequest, "order-by"),
+						LanguageUtil.get(httpServletRequest, getOrderByCol())));
 			}
 		).build();
 	}
