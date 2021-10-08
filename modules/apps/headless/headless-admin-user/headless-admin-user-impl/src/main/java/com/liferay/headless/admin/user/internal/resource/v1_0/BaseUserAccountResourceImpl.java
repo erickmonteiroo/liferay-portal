@@ -903,7 +903,9 @@ public abstract class BaseUserAccountResourceImpl
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Creates a new user account"
 	)
-	@io.swagger.v3.oas.annotations.tags.Tags(value = {})
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "UserAccount")}
+	)
 	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path("/user-accounts")
 	@javax.ws.rs.POST
@@ -928,7 +930,9 @@ public abstract class BaseUserAccountResourceImpl
 			)
 		}
 	)
-	@io.swagger.v3.oas.annotations.tags.Tags(value = {})
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "UserAccount")}
+	)
 	@javax.ws.rs.Consumes("application/json")
 	@javax.ws.rs.Path("/user-accounts/batch")
 	@javax.ws.rs.POST

@@ -988,7 +988,7 @@ components:
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.headless.admin.user.client', and version '4.0.8'."
+        'com.liferay.headless.admin.user.client', and version '4.0.9'."
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -3547,6 +3547,7 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/UserAccount"
+            tags: ["UserAccount"]
     "/user-accounts/by-external-reference-code/{externalReferenceCode}":
         delete:
             operationId: deleteUserAccountByExternalReferenceCode
