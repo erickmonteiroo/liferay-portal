@@ -795,6 +795,10 @@ components:
                     description:
                         The user's alias or screen name.
                     type: string
+                autoPassword:
+                    description:
+                        Wheter to autogenerate a password for the user.
+                    type: boolean
                 birthDate:
                     description:
                         The user's date of birth, in ISO 8601 format.
@@ -888,6 +892,14 @@ components:
                         $ref: "#/components/schemas/OrganizationBrief"
                     readOnly: true
                     type: array
+                password1:
+                    description:
+                        The user's password.
+                    type: string
+                password2:
+                    description:
+                        The user's password confirmation.
+                    type: string
                 profileURL:
                     description:
                         A relative URL to the user's profile.
@@ -900,6 +912,10 @@ components:
                         $ref: "#/components/schemas/RoleBrief"
                     readOnly: true
                     type: array
+                sendEmail:
+                    description:
+                        Whether to send automatic email for the user.
+                    type: boolean
                 siteBriefs:
                     description:
                         A list of the user's sites.

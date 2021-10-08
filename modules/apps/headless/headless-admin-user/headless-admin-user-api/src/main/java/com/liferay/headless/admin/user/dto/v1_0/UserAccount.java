@@ -178,6 +178,36 @@ public class UserAccount implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String alternateName;
 
+	@Schema(description = "Wheter to autogenerate a password for the user.")
+	public Boolean getAutoPassword() {
+		return autoPassword;
+	}
+
+	public void setAutoPassword(Boolean autoPassword) {
+		this.autoPassword = autoPassword;
+	}
+
+	@JsonIgnore
+	public void setAutoPassword(
+		UnsafeSupplier<Boolean, Exception> autoPasswordUnsafeSupplier) {
+
+		try {
+			autoPassword = autoPasswordUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(
+		description = "Wheter to autogenerate a password for the user."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean autoPassword;
+
 	@Schema(description = "The user's date of birth, in ISO 8601 format.")
 	public Date getBirthDate() {
 		return birthDate;
@@ -689,6 +719,62 @@ public class UserAccount implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected OrganizationBrief[] organizationBriefs;
 
+	@Schema(description = "The user's password.")
+	public String getPassword1() {
+		return password1;
+	}
+
+	public void setPassword1(String password1) {
+		this.password1 = password1;
+	}
+
+	@JsonIgnore
+	public void setPassword1(
+		UnsafeSupplier<String, Exception> password1UnsafeSupplier) {
+
+		try {
+			password1 = password1UnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "The user's password.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String password1;
+
+	@Schema(description = "The user's password confirmation.")
+	public String getPassword2() {
+		return password2;
+	}
+
+	public void setPassword2(String password2) {
+		this.password2 = password2;
+	}
+
+	@JsonIgnore
+	public void setPassword2(
+		UnsafeSupplier<String, Exception> password2UnsafeSupplier) {
+
+		try {
+			password2 = password2UnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "The user's password confirmation.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String password2;
+
 	@Schema(description = "A relative URL to the user's profile.")
 	public String getProfileURL() {
 		return profileURL;
@@ -745,6 +831,34 @@ public class UserAccount implements Serializable {
 	@GraphQLField(description = "A list of the user's roles.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected RoleBrief[] roleBriefs;
+
+	@Schema(description = "Whether to send automatic email for the user.")
+	public Boolean getSendEmail() {
+		return sendEmail;
+	}
+
+	public void setSendEmail(Boolean sendEmail) {
+		this.sendEmail = sendEmail;
+	}
+
+	@JsonIgnore
+	public void setSendEmail(
+		UnsafeSupplier<Boolean, Exception> sendEmailUnsafeSupplier) {
+
+		try {
+			sendEmail = sendEmailUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "Whether to send automatic email for the user.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean sendEmail;
 
 	@Schema(description = "A list of the user's sites.")
 	@Valid
@@ -894,6 +1008,16 @@ public class UserAccount implements Serializable {
 			sb.append(_escape(alternateName));
 
 			sb.append("\"");
+		}
+
+		if (autoPassword != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"autoPassword\": ");
+
+			sb.append(autoPassword);
 		}
 
 		if (birthDate != null) {
@@ -1166,6 +1290,34 @@ public class UserAccount implements Serializable {
 			sb.append("]");
 		}
 
+		if (password1 != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"password1\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(password1));
+
+			sb.append("\"");
+		}
+
+		if (password2 != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"password2\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(password2));
+
+			sb.append("\"");
+		}
+
 		if (profileURL != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -1198,6 +1350,16 @@ public class UserAccount implements Serializable {
 			}
 
 			sb.append("]");
+		}
+
+		if (sendEmail != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"sendEmail\": ");
+
+			sb.append(sendEmail);
 		}
 
 		if (siteBriefs != null) {

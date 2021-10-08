@@ -121,6 +121,27 @@ public class UserAccount implements Cloneable, Serializable {
 
 	protected String alternateName;
 
+	public Boolean getAutoPassword() {
+		return autoPassword;
+	}
+
+	public void setAutoPassword(Boolean autoPassword) {
+		this.autoPassword = autoPassword;
+	}
+
+	public void setAutoPassword(
+		UnsafeSupplier<Boolean, Exception> autoPasswordUnsafeSupplier) {
+
+		try {
+			autoPassword = autoPasswordUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean autoPassword;
+
 	public Date getBirthDate() {
 		return birthDate;
 	}
@@ -496,6 +517,48 @@ public class UserAccount implements Cloneable, Serializable {
 
 	protected OrganizationBrief[] organizationBriefs;
 
+	public String getPassword1() {
+		return password1;
+	}
+
+	public void setPassword1(String password1) {
+		this.password1 = password1;
+	}
+
+	public void setPassword1(
+		UnsafeSupplier<String, Exception> password1UnsafeSupplier) {
+
+		try {
+			password1 = password1UnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String password1;
+
+	public String getPassword2() {
+		return password2;
+	}
+
+	public void setPassword2(String password2) {
+		this.password2 = password2;
+	}
+
+	public void setPassword2(
+		UnsafeSupplier<String, Exception> password2UnsafeSupplier) {
+
+		try {
+			password2 = password2UnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String password2;
+
 	public String getProfileURL() {
 		return profileURL;
 	}
@@ -537,6 +600,27 @@ public class UserAccount implements Cloneable, Serializable {
 	}
 
 	protected RoleBrief[] roleBriefs;
+
+	public Boolean getSendEmail() {
+		return sendEmail;
+	}
+
+	public void setSendEmail(Boolean sendEmail) {
+		this.sendEmail = sendEmail;
+	}
+
+	public void setSendEmail(
+		UnsafeSupplier<Boolean, Exception> sendEmailUnsafeSupplier) {
+
+		try {
+			sendEmail = sendEmailUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean sendEmail;
 
 	public SiteBrief[] getSiteBriefs() {
 		return siteBriefs;

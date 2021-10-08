@@ -125,6 +125,16 @@ public class UserAccountSerDes {
 			sb.append("\"");
 		}
 
+		if (userAccount.getAutoPassword() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"autoPassword\": ");
+
+			sb.append(userAccount.getAutoPassword());
+		}
+
 		if (userAccount.getBirthDate() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -402,6 +412,34 @@ public class UserAccountSerDes {
 			sb.append("]");
 		}
 
+		if (userAccount.getPassword1() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"password1\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(userAccount.getPassword1()));
+
+			sb.append("\"");
+		}
+
+		if (userAccount.getPassword2() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"password2\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(userAccount.getPassword2()));
+
+			sb.append("\"");
+		}
+
 		if (userAccount.getProfileURL() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -434,6 +472,16 @@ public class UserAccountSerDes {
 			}
 
 			sb.append("]");
+		}
+
+		if (userAccount.getSendEmail() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"sendEmail\": ");
+
+			sb.append(userAccount.getSendEmail());
 		}
 
 		if (userAccount.getSiteBriefs() != null) {
@@ -521,6 +569,14 @@ public class UserAccountSerDes {
 			map.put(
 				"alternateName",
 				String.valueOf(userAccount.getAlternateName()));
+		}
+
+		if (userAccount.getAutoPassword() == null) {
+			map.put("autoPassword", null);
+		}
+		else {
+			map.put(
+				"autoPassword", String.valueOf(userAccount.getAutoPassword()));
 		}
 
 		if (userAccount.getBirthDate() == null) {
@@ -668,6 +724,20 @@ public class UserAccountSerDes {
 				String.valueOf(userAccount.getOrganizationBriefs()));
 		}
 
+		if (userAccount.getPassword1() == null) {
+			map.put("password1", null);
+		}
+		else {
+			map.put("password1", String.valueOf(userAccount.getPassword1()));
+		}
+
+		if (userAccount.getPassword2() == null) {
+			map.put("password2", null);
+		}
+		else {
+			map.put("password2", String.valueOf(userAccount.getPassword2()));
+		}
+
 		if (userAccount.getProfileURL() == null) {
 			map.put("profileURL", null);
 		}
@@ -680,6 +750,13 @@ public class UserAccountSerDes {
 		}
 		else {
 			map.put("roleBriefs", String.valueOf(userAccount.getRoleBriefs()));
+		}
+
+		if (userAccount.getSendEmail() == null) {
+			map.put("sendEmail", null);
+		}
+		else {
+			map.put("sendEmail", String.valueOf(userAccount.getSendEmail()));
 		}
 
 		if (userAccount.getSiteBriefs() == null) {
@@ -746,6 +823,11 @@ public class UserAccountSerDes {
 			else if (Objects.equals(jsonParserFieldName, "alternateName")) {
 				if (jsonParserFieldValue != null) {
 					userAccount.setAlternateName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "autoPassword")) {
+				if (jsonParserFieldValue != null) {
+					userAccount.setAutoPassword((Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "birthDate")) {
@@ -866,6 +948,16 @@ public class UserAccountSerDes {
 						));
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "password1")) {
+				if (jsonParserFieldValue != null) {
+					userAccount.setPassword1((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "password2")) {
+				if (jsonParserFieldValue != null) {
+					userAccount.setPassword2((String)jsonParserFieldValue);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "profileURL")) {
 				if (jsonParserFieldValue != null) {
 					userAccount.setProfileURL((String)jsonParserFieldValue);
@@ -881,6 +973,11 @@ public class UserAccountSerDes {
 						).toArray(
 							size -> new RoleBrief[size]
 						));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "sendEmail")) {
+				if (jsonParserFieldValue != null) {
+					userAccount.setSendEmail((Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "siteBriefs")) {

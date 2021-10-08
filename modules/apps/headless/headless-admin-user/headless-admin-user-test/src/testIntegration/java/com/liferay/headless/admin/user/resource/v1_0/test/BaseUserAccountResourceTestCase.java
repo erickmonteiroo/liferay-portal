@@ -198,6 +198,8 @@ public abstract class BaseUserAccountResourceTestCase {
 		userAccount.setImage(regex);
 		userAccount.setJobTitle(regex);
 		userAccount.setName(regex);
+		userAccount.setPassword1(regex);
+		userAccount.setPassword2(regex);
 		userAccount.setProfileURL(regex);
 
 		String json = UserAccountSerDes.toJSON(userAccount);
@@ -218,6 +220,8 @@ public abstract class BaseUserAccountResourceTestCase {
 		Assert.assertEquals(regex, userAccount.getImage());
 		Assert.assertEquals(regex, userAccount.getJobTitle());
 		Assert.assertEquals(regex, userAccount.getName());
+		Assert.assertEquals(regex, userAccount.getPassword1());
+		Assert.assertEquals(regex, userAccount.getPassword2());
 		Assert.assertEquals(regex, userAccount.getProfileURL());
 	}
 
@@ -2555,6 +2559,14 @@ public abstract class BaseUserAccountResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("autoPassword", additionalAssertFieldName)) {
+				if (userAccount.getAutoPassword() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("birthDate", additionalAssertFieldName)) {
 				if (userAccount.getBirthDate() == null) {
 					valid = false;
@@ -2679,6 +2691,22 @@ public abstract class BaseUserAccountResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("password1", additionalAssertFieldName)) {
+				if (userAccount.getPassword1() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("password2", additionalAssertFieldName)) {
+				if (userAccount.getPassword2() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("profileURL", additionalAssertFieldName)) {
 				if (userAccount.getProfileURL() == null) {
 					valid = false;
@@ -2689,6 +2717,14 @@ public abstract class BaseUserAccountResourceTestCase {
 
 			if (Objects.equals("roleBriefs", additionalAssertFieldName)) {
 				if (userAccount.getRoleBriefs() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("sendEmail", additionalAssertFieldName)) {
+				if (userAccount.getSendEmail() == null) {
 					valid = false;
 				}
 
@@ -2844,6 +2880,17 @@ public abstract class BaseUserAccountResourceTestCase {
 				if (!Objects.deepEquals(
 						userAccount1.getAlternateName(),
 						userAccount2.getAlternateName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("autoPassword", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						userAccount1.getAutoPassword(),
+						userAccount2.getAutoPassword())) {
 
 					return false;
 				}
@@ -3050,6 +3097,28 @@ public abstract class BaseUserAccountResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("password1", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						userAccount1.getPassword1(),
+						userAccount2.getPassword1())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("password2", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						userAccount1.getPassword2(),
+						userAccount2.getPassword2())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("profileURL", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						userAccount1.getProfileURL(),
@@ -3065,6 +3134,17 @@ public abstract class BaseUserAccountResourceTestCase {
 				if (!Objects.deepEquals(
 						userAccount1.getRoleBriefs(),
 						userAccount2.getRoleBriefs())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("sendEmail", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						userAccount1.getSendEmail(),
+						userAccount2.getSendEmail())) {
 
 					return false;
 				}
@@ -3218,6 +3298,11 @@ public abstract class BaseUserAccountResourceTestCase {
 			sb.append("'");
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("autoPassword")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("birthDate")) {
@@ -3449,6 +3534,22 @@ public abstract class BaseUserAccountResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("password1")) {
+			sb.append("'");
+			sb.append(String.valueOf(userAccount.getPassword1()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("password2")) {
+			sb.append("'");
+			sb.append(String.valueOf(userAccount.getPassword2()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("profileURL")) {
 			sb.append("'");
 			sb.append(String.valueOf(userAccount.getProfileURL()));
@@ -3458,6 +3559,11 @@ public abstract class BaseUserAccountResourceTestCase {
 		}
 
 		if (entityFieldName.equals("roleBriefs")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("sendEmail")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -3520,6 +3626,7 @@ public abstract class BaseUserAccountResourceTestCase {
 					RandomTestUtil.randomString());
 				alternateName = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				autoPassword = RandomTestUtil.randomBoolean();
 				birthDate = RandomTestUtil.nextDate();
 				dashboardURL = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
@@ -3544,8 +3651,13 @@ public abstract class BaseUserAccountResourceTestCase {
 					RandomTestUtil.randomString());
 				lastLoginDate = RandomTestUtil.nextDate();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				password1 = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				password2 = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				profileURL = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				sendEmail = RandomTestUtil.randomBoolean();
 			}
 		};
 	}
