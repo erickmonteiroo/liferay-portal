@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Raylife Web
+Bundle-SymbolicName: com.liferay.raylife.web
+Bundle-Version: 1.0.0
+Web-ContextPath: /raylife-web
