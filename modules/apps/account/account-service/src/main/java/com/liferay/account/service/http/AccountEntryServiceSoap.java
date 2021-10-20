@@ -142,6 +142,24 @@ public class AccountEntryServiceSoap {
 		}
 	}
 
+	public static com.liferay.account.model.AccountEntrySoap fetchAccountEntry(
+			long accountEntryId)
+		throws RemoteException {
+
+		try {
+			com.liferay.account.model.AccountEntry returnValue =
+				AccountEntryServiceUtil.fetchAccountEntry(accountEntryId);
+
+			return com.liferay.account.model.AccountEntrySoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static com.liferay.account.model.AccountEntrySoap[]
 			getAccountEntries(
 				long companyId, int status, int start, int end,

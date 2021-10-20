@@ -79,6 +79,14 @@ public class AccountEntryServiceWrapper
 	}
 
 	@Override
+	public com.liferay.account.model.AccountEntry fetchAccountEntry(
+			long accountEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountEntryService.fetchAccountEntry(accountEntryId);
+	}
+
+	@Override
 	public java.util.List<com.liferay.account.model.AccountEntry>
 			getAccountEntries(
 				long companyId, int status, int start, int end,

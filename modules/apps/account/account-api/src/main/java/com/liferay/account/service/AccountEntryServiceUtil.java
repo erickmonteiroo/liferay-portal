@@ -85,6 +85,12 @@ public class AccountEntryServiceUtil {
 			logoBytes, taxIdNumber, type, status, serviceContext);
 	}
 
+	public static AccountEntry fetchAccountEntry(long accountEntryId)
+		throws PortalException {
+
+		return getService().fetchAccountEntry(accountEntryId);
+	}
+
 	public static List<AccountEntry> getAccountEntries(
 			long companyId, int status, int start, int end,
 			OrderByComparator<AccountEntry> orderByComparator)
