@@ -18,15 +18,15 @@ import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryUserRel;
-import com.liferay.account.service.AccountEntryLocalService;
-import com.liferay.account.service.AccountEntryUserRelLocalService;
+import com.liferay.account.service.AccountEntryService;
+import com.liferay.account.service.AccountEntryUserRelService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.exception.UserScreenNameException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
-import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Http;
@@ -80,12 +80,13 @@ public class AddAccountUserMVCActionCommand extends BaseMVCActionCommand {
 		String lastName = ParamUtil.getString(actionRequest, "lastName");
 		long prefixId = ParamUtil.getLong(actionRequest, "prefixId");
 		long suffixId = ParamUtil.getLong(actionRequest, "suffixId");
+		String jobTitle =  ParamUtil.getString(actionRequest, "jobTitle");
 
 		try {
 			AccountEntryUserRel accountEntryUserRel = null;
 
 			AccountEntry accountEntry =
-				_accountEntryLocalService.fetchAccountEntry(accountEntryId);
+				_accountEntryService.fetchAccountEntry(accountEntryId);
 
 			if ((accountEntry != null) &&
 				Objects.equals(
@@ -93,19 +94,19 @@ public class AddAccountUserMVCActionCommand extends BaseMVCActionCommand {
 					accountEntry.getType())) {
 
 				accountEntryUserRel =
-					_accountEntryUserRelLocalService.
+					_accountEntryUserRelService.
 						addPersonTypeAccountEntryUserRel(
 							accountEntryId, themeDisplay.getUserId(),
 							screenName, emailAddress,
 							LocaleUtil.fromLanguageId(languageId), firstName,
-							middleName, lastName, prefixId, suffixId);
+							middleName, lastName, prefixId, suffixId, jobTitle);
 			}
 			else {
 				accountEntryUserRel =
-					_accountEntryUserRelLocalService.addAccountEntryUserRel(
+					_accountEntryUserRelService.addAccountEntryUserRel(
 						accountEntryId, themeDisplay.getUserId(), screenName,
 						emailAddress, LocaleUtil.fromLanguageId(languageId),
-						firstName, middleName, lastName, prefixId, suffixId);
+						firstName, middleName, lastName, prefixId, suffixId, jobTitle);
 			}
 
 			String portletId = _portal.getPortletId(actionRequest);
@@ -123,9 +124,9 @@ public class AddAccountUserMVCActionCommand extends BaseMVCActionCommand {
 						actionRequest, "enableAutomaticSiteMembership", true);
 
 				if (enableAutomaticSiteMembership) {
-					_userLocalService.addGroupUser(
+					_userService.addGroupUsers(
 						themeDisplay.getSiteGroupId(),
-						accountEntryUserRel.getAccountUserId());
+						new long[] {accountEntryUserRel.getAccountUserId()}, null);
 				}
 			}
 
@@ -156,10 +157,10 @@ public class AddAccountUserMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	@Reference
-	private AccountEntryLocalService _accountEntryLocalService;
+	private AccountEntryService _accountEntryService;
 
 	@Reference
-	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
+	private AccountEntryUserRelService _accountEntryUserRelService;
 
 	@Reference
 	private Http _http;
@@ -171,6 +172,6 @@ public class AddAccountUserMVCActionCommand extends BaseMVCActionCommand {
 	private PortletPreferencesLocalService _portletPreferencesLocalService;
 
 	@Reference
-	private UserLocalService _userLocalService;
+	private UserService _userService;
 
 }
