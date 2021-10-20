@@ -2259,6 +2259,23 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	}
 
 	/**
+	 * Updates the user's job title.
+	 *
+	 * @param   userId the primary key of the user
+	 * @param   jobTitle the user's job title
+	 * @return  the user
+	 */
+	@Override
+	public User updateJobTitle(long userId, String jobTitle)
+		throws PortalException {
+
+		UserPermissionUtil.check(
+			getPermissionChecker(), userId, ActionKeys.UPDATE);
+
+		return userLocalService.updateJobTitle(userId, jobTitle);
+	}
+
+	/**
 	 * Updates whether the user is locked out from logging in.
 	 *
 	 * @param  userId the primary key of the user
