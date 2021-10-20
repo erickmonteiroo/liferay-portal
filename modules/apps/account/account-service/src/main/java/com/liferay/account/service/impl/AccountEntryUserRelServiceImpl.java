@@ -96,6 +96,26 @@ public class AccountEntryUserRelServiceImpl
 	}
 
 	@Override
+	public AccountEntryUserRel addPersonTypeAccountEntryUserRel (
+		long accountEntryId, long creatorUserId, String screenName,
+		String emailAddress, Locale locale, String firstName,
+		String middleName, String lastName, long prefixId, long suffixId,
+		String jobTitle) throws PortalException{
+
+		_modelResourcePermission.check(
+			getPermissionChecker(), accountEntryId, ActionKeys.MANAGE_USERS);
+
+		AccountEntryUserRel accountEntryUserRel =
+			accountEntryUserRelLocalService.addPersonTypeAccountEntryUserRel(
+				accountEntryId, creatorUserId, screenName, emailAddress, locale,
+				firstName, middleName, lastName, prefixId, suffixId);
+
+		_userLocalService.updateJobTitle(accountEntryUserRel.getAccountUserId(), jobTitle);
+
+		return accountEntryUserRel;
+	}
+
+	@Override
 	public void deleteAccountEntryUserRelByEmailAddress(
 			long accountEntryId, String emailAddress)
 		throws PortalException {
