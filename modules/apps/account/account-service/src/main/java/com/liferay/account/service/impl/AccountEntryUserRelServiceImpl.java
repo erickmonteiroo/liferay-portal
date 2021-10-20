@@ -23,10 +23,12 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -55,6 +57,27 @@ public class AccountEntryUserRelServiceImpl
 		return accountEntryUserRelLocalService.addAccountEntryUserRel(
 			accountEntryId, creatorUserId, screenName, emailAddress, locale,
 			firstName, middleName, lastName, prefixId, suffixId);
+	}
+
+	@Override
+	public AccountEntryUserRel addAccountEntryUserRel(
+		long accountEntryId, long creatorUserId, String screenName,
+		String emailAddress, Locale locale, String firstName,
+		String middleName, String lastName, long prefixId, long suffixId,
+		String jobTitle
+	) throws PortalException {
+
+		_modelResourcePermission.check(
+			getPermissionChecker(), accountEntryId, ActionKeys.MANAGE_USERS);
+
+		AccountEntryUserRel accountEntryUserRel =
+			accountEntryUserRelLocalService.addAccountEntryUserRel(
+			accountEntryId, creatorUserId, screenName, emailAddress, locale,
+			firstName, middleName, lastName, prefixId, suffixId);
+
+		_userLocalService.updateJobTitle(accountEntryUserRel.getAccountUserId(), jobTitle);
+
+		return accountEntryUserRel;
 	}
 
 	@Override
@@ -118,6 +141,9 @@ public class AccountEntryUserRelServiceImpl
 		accountEntryUserRelLocalService.setPersonTypeAccountEntryUser(
 			accountEntryId, userId);
 	}
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 	private static volatile ModelResourcePermission<AccountEntry>
 		_modelResourcePermission = ModelResourcePermissionFactory.getInstance(
