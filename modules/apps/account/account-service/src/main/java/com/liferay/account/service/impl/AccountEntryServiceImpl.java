@@ -105,6 +105,22 @@ public class AccountEntryServiceImpl extends AccountEntryServiceBaseImpl {
 	}
 
 	@Override
+	public AccountEntry fetchAccountEntry(long accountEntryId) throws PortalException{
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if (!permissionChecker.hasPermission(
+			null, AccountEntry.class.getName(), accountEntryId,
+			ActionKeys.VIEW)) {
+
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, AccountEntry.class.getName(), 0,
+				ActionKeys.VIEW);
+		}
+
+		return accountEntryLocalService.fetchAccountEntry(accountEntryId);
+	}
+
+	@Override
 	public List<AccountEntry> getAccountEntries(
 			long companyId, int status, int start, int end,
 			OrderByComparator<AccountEntry> orderByComparator)
