@@ -1216,6 +1216,16 @@ public interface UserService extends BaseService {
 		throws PortalException;
 
 	/**
+	 * Updates the user's job title.
+	 *
+	 * @param userId the primary key of the user
+	 * @param jobTitle the user's job title
+	 * @return the user
+	 */
+	public User updateJobTitle(long userId, String jobTitle)
+		throws PortalException;
+
+	/**
 	 * Updates whether the user is locked out from logging in.
 	 *
 	 * @param userId the primary key of the user

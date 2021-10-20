@@ -2146,6 +2146,31 @@ public class UserServiceSoap {
 	}
 
 	/**
+	 * Updates the user's job title.
+	 *
+	 * @param userId the primary key of the user
+	 * @param jobTitle the user's job title
+	 * @return the user
+	 */
+	public static com.liferay.portal.kernel.model.UserSoap updateJobTitle(
+			long userId, String jobTitle)
+		throws RemoteException {
+
+		try {
+			com.liferay.portal.kernel.model.User returnValue =
+				UserServiceUtil.updateJobTitle(userId, jobTitle);
+
+			return com.liferay.portal.kernel.model.UserSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	/**
 	 * Updates whether the user is locked out from logging in.
 	 *
 	 * @param userId the primary key of the user

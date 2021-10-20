@@ -1520,6 +1520,20 @@ public class UserServiceWrapper
 	}
 
 	/**
+	 * Updates the user's job title.
+	 *
+	 * @param userId the primary key of the user
+	 * @param jobTitle the user's job title
+	 * @return the user
+	 */
+	@Override
+	public User updateJobTitle(long userId, String jobTitle)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _userService.updateJobTitle(userId, jobTitle);
+	}
+
+	/**
 	 * Updates whether the user is locked out from logging in.
 	 *
 	 * @param userId the primary key of the user

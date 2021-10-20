@@ -2712,6 +2712,46 @@ public class UserServiceHttp {
 		}
 	}
 
+	public static com.liferay.portal.kernel.model.User updateJobTitle(
+			HttpPrincipal httpPrincipal, long userId, String jobTitle)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				UserServiceUtil.class, "updateJobTitle",
+				_updateJobTitleParameterTypes63);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, userId, jobTitle);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.portal.kernel.model.User)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static com.liferay.portal.kernel.model.User updateLockoutById(
 			HttpPrincipal httpPrincipal, long userId, boolean lockout)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -2719,7 +2759,7 @@ public class UserServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				UserServiceUtil.class, "updateLockoutById",
-				_updateLockoutByIdParameterTypes63);
+				_updateLockoutByIdParameterTypes64);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, userId, lockout);
@@ -2759,7 +2799,7 @@ public class UserServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				UserServiceUtil.class, "updateOpenId",
-				_updateOpenIdParameterTypes64);
+				_updateOpenIdParameterTypes65);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, userId, openId);
@@ -2800,7 +2840,7 @@ public class UserServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				UserServiceUtil.class, "updateOrganizations",
-				_updateOrganizationsParameterTypes65);
+				_updateOrganizationsParameterTypes66);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, userId, organizationIds, serviceContext);
@@ -2837,7 +2877,7 @@ public class UserServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				UserServiceUtil.class, "updatePassword",
-				_updatePasswordParameterTypes66);
+				_updatePasswordParameterTypes67);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, userId, password1, password2, passwordReset);
@@ -2877,7 +2917,7 @@ public class UserServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				UserServiceUtil.class, "updatePortrait",
-				_updatePortraitParameterTypes67);
+				_updatePortraitParameterTypes68);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, userId, bytes);
@@ -2918,7 +2958,7 @@ public class UserServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				UserServiceUtil.class, "updateReminderQuery",
-				_updateReminderQueryParameterTypes68);
+				_updateReminderQueryParameterTypes69);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, userId, question, answer);
@@ -2958,7 +2998,7 @@ public class UserServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				UserServiceUtil.class, "updateScreenName",
-				_updateScreenNameParameterTypes69);
+				_updateScreenNameParameterTypes70);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, userId, screenName);
@@ -2999,7 +3039,7 @@ public class UserServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				UserServiceUtil.class, "updateStatus",
-				_updateStatusParameterTypes70);
+				_updateStatusParameterTypes71);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, userId, status, serviceContext);
@@ -3061,7 +3101,7 @@ public class UserServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				UserServiceUtil.class, "updateUser",
-				_updateUserParameterTypes71);
+				_updateUserParameterTypes72);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, userId, oldPassword, newPassword1, newPassword2,
@@ -3132,7 +3172,7 @@ public class UserServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				UserServiceUtil.class, "updateUser",
-				_updateUserParameterTypes72);
+				_updateUserParameterTypes73);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, userId, oldPassword, newPassword1, newPassword2,
@@ -3195,7 +3235,7 @@ public class UserServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				UserServiceUtil.class, "updateUser",
-				_updateUserParameterTypes73);
+				_updateUserParameterTypes74);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, userId, oldPassword, newPassword1, newPassword2,
@@ -3255,7 +3295,7 @@ public class UserServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				UserServiceUtil.class, "updateUser",
-				_updateUserParameterTypes74);
+				_updateUserParameterTypes75);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, userId, oldPassword, newPassword1, newPassword2,
@@ -3541,29 +3581,31 @@ public class UserServiceHttp {
 			int.class, String.class, boolean.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateLockoutByIdParameterTypes63 =
-		new Class[] {long.class, boolean.class};
-	private static final Class<?>[] _updateOpenIdParameterTypes64 =
+	private static final Class<?>[] _updateJobTitleParameterTypes63 =
 		new Class[] {long.class, String.class};
-	private static final Class<?>[] _updateOrganizationsParameterTypes65 =
+	private static final Class<?>[] _updateLockoutByIdParameterTypes64 =
+		new Class[] {long.class, boolean.class};
+	private static final Class<?>[] _updateOpenIdParameterTypes65 =
+		new Class[] {long.class, String.class};
+	private static final Class<?>[] _updateOrganizationsParameterTypes66 =
 		new Class[] {
 			long.class, long[].class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updatePasswordParameterTypes66 =
+	private static final Class<?>[] _updatePasswordParameterTypes67 =
 		new Class[] {long.class, String.class, String.class, boolean.class};
-	private static final Class<?>[] _updatePortraitParameterTypes67 =
+	private static final Class<?>[] _updatePortraitParameterTypes68 =
 		new Class[] {long.class, byte[].class};
-	private static final Class<?>[] _updateReminderQueryParameterTypes68 =
+	private static final Class<?>[] _updateReminderQueryParameterTypes69 =
 		new Class[] {long.class, String.class, String.class};
-	private static final Class<?>[] _updateScreenNameParameterTypes69 =
+	private static final Class<?>[] _updateScreenNameParameterTypes70 =
 		new Class[] {long.class, String.class};
-	private static final Class<?>[] _updateStatusParameterTypes70 =
+	private static final Class<?>[] _updateStatusParameterTypes71 =
 		new Class[] {
 			long.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateUserParameterTypes71 = new Class[] {
+	private static final Class<?>[] _updateUserParameterTypes72 = new Class[] {
 		long.class, String.class, String.class, String.class, boolean.class,
 		String.class, String.class, String.class, String.class, boolean.class,
 		byte[].class, String.class, String.class, String.class, String.class,
@@ -3575,7 +3617,7 @@ public class UserServiceHttp {
 		java.util.List.class, java.util.List.class, java.util.List.class,
 		com.liferay.portal.kernel.service.ServiceContext.class
 	};
-	private static final Class<?>[] _updateUserParameterTypes72 = new Class[] {
+	private static final Class<?>[] _updateUserParameterTypes73 = new Class[] {
 		long.class, String.class, String.class, String.class, boolean.class,
 		String.class, String.class, String.class, String.class, long.class,
 		String.class, boolean.class, byte[].class, String.class, String.class,
@@ -3588,7 +3630,7 @@ public class UserServiceHttp {
 		java.util.List.class,
 		com.liferay.portal.kernel.service.ServiceContext.class
 	};
-	private static final Class<?>[] _updateUserParameterTypes73 = new Class[] {
+	private static final Class<?>[] _updateUserParameterTypes74 = new Class[] {
 		long.class, String.class, String.class, String.class, boolean.class,
 		String.class, String.class, String.class, String.class, long.class,
 		String.class, String.class, String.class, String.class, String.class,
@@ -3598,7 +3640,7 @@ public class UserServiceHttp {
 		long[].class, long[].class, long[].class, java.util.List.class,
 		long[].class, com.liferay.portal.kernel.service.ServiceContext.class
 	};
-	private static final Class<?>[] _updateUserParameterTypes74 = new Class[] {
+	private static final Class<?>[] _updateUserParameterTypes75 = new Class[] {
 		long.class, String.class, String.class, String.class, boolean.class,
 		String.class, String.class, String.class, String.class, String.class,
 		String.class, String.class, String.class, String.class, String.class,

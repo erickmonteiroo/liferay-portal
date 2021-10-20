@@ -1445,6 +1445,19 @@ public class UserServiceUtil {
 	}
 
 	/**
+	 * Updates the user's job title.
+	 *
+	 * @param userId the primary key of the user
+	 * @param jobTitle the user's job title
+	 * @return the user
+	 */
+	public static User updateJobTitle(long userId, String jobTitle)
+		throws PortalException {
+
+		return getService().updateJobTitle(userId, jobTitle);
+	}
+
+	/**
 	 * Updates whether the user is locked out from logging in.
 	 *
 	 * @param userId the primary key of the user
