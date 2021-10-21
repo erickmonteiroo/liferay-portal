@@ -61,21 +61,22 @@ public class AccountEntryUserRelServiceImpl
 
 	@Override
 	public AccountEntryUserRel addAccountEntryUserRel(
-		long accountEntryId, long creatorUserId, String screenName,
-		String emailAddress, Locale locale, String firstName,
-		String middleName, String lastName, long prefixId, long suffixId,
-		String jobTitle
-	) throws PortalException {
+			long accountEntryId, long creatorUserId, String screenName,
+			String emailAddress, Locale locale, String firstName,
+			String middleName, String lastName, long prefixId, long suffixId,
+			String jobTitle)
+		throws PortalException {
 
 		_modelResourcePermission.check(
 			getPermissionChecker(), accountEntryId, ActionKeys.MANAGE_USERS);
 
 		AccountEntryUserRel accountEntryUserRel =
 			accountEntryUserRelLocalService.addAccountEntryUserRel(
-			accountEntryId, creatorUserId, screenName, emailAddress, locale,
-			firstName, middleName, lastName, prefixId, suffixId);
+				accountEntryId, creatorUserId, screenName, emailAddress, locale,
+				firstName, middleName, lastName, prefixId, suffixId);
 
-		_userLocalService.updateJobTitle(accountEntryUserRel.getAccountUserId(), jobTitle);
+		_userLocalService.updateJobTitle(
+			accountEntryUserRel.getAccountUserId(), jobTitle);
 
 		return accountEntryUserRel;
 	}
@@ -96,11 +97,12 @@ public class AccountEntryUserRelServiceImpl
 	}
 
 	@Override
-	public AccountEntryUserRel addPersonTypeAccountEntryUserRel (
-		long accountEntryId, long creatorUserId, String screenName,
-		String emailAddress, Locale locale, String firstName,
-		String middleName, String lastName, long prefixId, long suffixId,
-		String jobTitle) throws PortalException{
+	public AccountEntryUserRel addPersonTypeAccountEntryUserRel(
+			long accountEntryId, long creatorUserId, String screenName,
+			String emailAddress, Locale locale, String firstName,
+			String middleName, String lastName, long prefixId, long suffixId,
+			String jobTitle)
+		throws PortalException {
 
 		_modelResourcePermission.check(
 			getPermissionChecker(), accountEntryId, ActionKeys.MANAGE_USERS);
@@ -110,7 +112,8 @@ public class AccountEntryUserRelServiceImpl
 				accountEntryId, creatorUserId, screenName, emailAddress, locale,
 				firstName, middleName, lastName, prefixId, suffixId);
 
-		_userLocalService.updateJobTitle(accountEntryUserRel.getAccountUserId(), jobTitle);
+		_userLocalService.updateJobTitle(
+			accountEntryUserRel.getAccountUserId(), jobTitle);
 
 		return accountEntryUserRel;
 	}
@@ -127,12 +130,12 @@ public class AccountEntryUserRelServiceImpl
 			accountEntryId, emailAddress);
 	}
 
-	@Reference
-	private UserLocalService _userLocalService;
-
 	private static volatile ModelResourcePermission<AccountEntry>
 		_modelResourcePermission = ModelResourcePermissionFactory.getInstance(
 			AccountEntryUserRelServiceImpl.class, "_modelResourcePermission",
 			AccountEntry.class);
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

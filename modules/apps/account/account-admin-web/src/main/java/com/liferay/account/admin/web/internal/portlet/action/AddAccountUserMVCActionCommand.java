@@ -80,13 +80,13 @@ public class AddAccountUserMVCActionCommand extends BaseMVCActionCommand {
 		String lastName = ParamUtil.getString(actionRequest, "lastName");
 		long prefixId = ParamUtil.getLong(actionRequest, "prefixId");
 		long suffixId = ParamUtil.getLong(actionRequest, "suffixId");
-		String jobTitle =  ParamUtil.getString(actionRequest, "jobTitle");
+		String jobTitle = ParamUtil.getString(actionRequest, "jobTitle");
 
 		try {
 			AccountEntryUserRel accountEntryUserRel = null;
 
-			AccountEntry accountEntry =
-				_accountEntryService.fetchAccountEntry(accountEntryId);
+			AccountEntry accountEntry = _accountEntryService.fetchAccountEntry(
+				accountEntryId);
 
 			if ((accountEntry != null) &&
 				Objects.equals(
@@ -106,7 +106,8 @@ public class AddAccountUserMVCActionCommand extends BaseMVCActionCommand {
 					_accountEntryUserRelService.addAccountEntryUserRel(
 						accountEntryId, themeDisplay.getUserId(), screenName,
 						emailAddress, LocaleUtil.fromLanguageId(languageId),
-						firstName, middleName, lastName, prefixId, suffixId, jobTitle);
+						firstName, middleName, lastName, prefixId, suffixId,
+						jobTitle);
 			}
 
 			String portletId = _portal.getPortletId(actionRequest);
@@ -126,7 +127,8 @@ public class AddAccountUserMVCActionCommand extends BaseMVCActionCommand {
 				if (enableAutomaticSiteMembership) {
 					_userService.addGroupUsers(
 						themeDisplay.getSiteGroupId(),
-						new long[] {accountEntryUserRel.getAccountUserId()}, null);
+						new long[] {accountEntryUserRel.getAccountUserId()},
+						null);
 				}
 			}
 
