@@ -192,6 +192,10 @@ public interface PropsKeys {
 	public static final String AUTH_LOGIN_PORTLET_NAME =
 		"auth.login.portlet.name";
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	public static final String AUTH_LOGIN_PROMPT_ENABLED =
 		"auth.login.prompt.enabled";
 
