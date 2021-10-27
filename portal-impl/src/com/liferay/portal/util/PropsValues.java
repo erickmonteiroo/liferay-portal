@@ -213,6 +213,10 @@ public class PropsValues {
 	public static final String AUTH_LOGIN_PORTLET_NAME = PropsUtil.get(
 		PropsKeys.AUTH_LOGIN_PORTLET_NAME);
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	public static final boolean AUTH_LOGIN_PROMPT_ENABLED =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.AUTH_LOGIN_PROMPT_ENABLED));
