@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.interval.IntervalActionProcessor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.login.AuthLoginSettingsUtil;
 import com.liferay.portal.kernel.model.ColorScheme;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -694,7 +695,8 @@ public class ServicePreAction extends Action {
 				!hasViewLayoutPermission) {
 
 				if (user.isDefaultUser() &&
-					PropsValues.AUTH_LOGIN_PROMPT_ENABLED) {
+					AuthLoginSettingsUtil.isPromptEnabled(
+						layout.getGroupId())) {
 
 					throw new PrincipalException.MustBeAuthenticated(
 						String.valueOf(user.getUserId()));
@@ -1096,7 +1098,7 @@ public class ServicePreAction extends Action {
 						   permissionChecker, layout, false)))) {
 
 				if (!group.isUser() && user.isDefaultUser() &&
-					PropsValues.AUTH_LOGIN_PROMPT_ENABLED) {
+					AuthLoginSettingsUtil.isPromptEnabled(group.getGroupId())) {
 
 					throw new PrincipalException.MustBeAuthenticated(
 						user.getUserId());
