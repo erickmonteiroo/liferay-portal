@@ -185,10 +185,13 @@ public class AccountEntryServiceImpl extends AccountEntryServiceBaseImpl {
 	public AccountEntry getAccountEntry(long accountEntryId)
 		throws PortalException {
 
+		AccountEntry accountEntry = accountEntryLocalService.getAccountEntry(
+			accountEntryId);
+
 		_accountEntryModelResourcePermission.check(
 			getPermissionChecker(), accountEntryId, ActionKeys.VIEW);
 
-		return accountEntryLocalService.getAccountEntry(accountEntryId);
+		return accountEntry;
 	}
 
 	@Override
