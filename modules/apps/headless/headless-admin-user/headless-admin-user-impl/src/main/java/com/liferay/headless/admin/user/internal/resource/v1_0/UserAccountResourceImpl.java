@@ -405,12 +405,9 @@ public class UserAccountResourceImpl
 				contextAcceptLanguage.getPreferredLocale(),
 				userAccount.getGivenName(), userAccount.getAdditionalName(),
 				userAccount.getFamilyName(), _getPrefixId(userAccount),
-				_getSuffixId(userAccount), null);
+				_getSuffixId(userAccount), userAccount.getJobTitle());
 
 		User user = accountEntryUserRel.getUser();
-
-		user = _userLocalService.updateJobTitle(
-			user.getUserId(), userAccount.getJobTitle());
 
 		UsersAdminUtil.updateAddresses(
 			Contact.class.getName(), user.getContactId(),
