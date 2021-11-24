@@ -22,7 +22,7 @@ import java.util.stream.Stream;
 /**
  * @author Drew Brokke
  */
-public class CSSClassNames {
+public class CSSClasses {
 
 	public static Builder builder(String... cssClasses) {
 		Builder builder = new Builder();
@@ -78,7 +78,7 @@ public class CSSClassNames {
 
 	}
 
-	private CSSClassNames() {
+	private CSSClasses() {
 	}
 
 }
