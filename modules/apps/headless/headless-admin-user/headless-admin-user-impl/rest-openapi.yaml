@@ -962,6 +962,23 @@ components:
                             type: array
                     type: object
             type: object
+        UserGroup:
+            properties:
+                description:
+                    type: string
+                id:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                name:
+                    type: string
+                usersCount:
+                    format: int32
+                    readOnly: true
+                    type: integer
+            required:
+                - name
+            type: object
         WebUrl:
             description:
                 Represents a URL to an external site. This is modeled internally as a `WebSite`.
