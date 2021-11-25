@@ -3829,6 +3829,30 @@ paths:
                                     $ref: "#/components/schemas/WebUrl"
                                 type: array
             tags: ["WebUrl"]
+    "/user-groups":
+        post:
+            operationId: postUserGroup
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/UserGroup"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/UserGroup"
+            responses:
+                201:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/UserGroup"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/UserGroup"
+                    # @review
+                    description:
+                        "User group successfully created"
+            tags: ["UserGroup"]
     "/web-urls/{webUrlId}":
         get:
             description:
