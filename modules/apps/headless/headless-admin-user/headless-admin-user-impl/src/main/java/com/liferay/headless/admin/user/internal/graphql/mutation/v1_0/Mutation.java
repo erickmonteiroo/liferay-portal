@@ -18,12 +18,14 @@ import com.liferay.headless.admin.user.dto.v1_0.Account;
 import com.liferay.headless.admin.user.dto.v1_0.AccountRole;
 import com.liferay.headless.admin.user.dto.v1_0.Organization;
 import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
+import com.liferay.headless.admin.user.dto.v1_0.UserGroup;
 import com.liferay.headless.admin.user.resource.v1_0.AccountResource;
 import com.liferay.headless.admin.user.resource.v1_0.AccountRoleResource;
 import com.liferay.headless.admin.user.resource.v1_0.OrganizationResource;
 import com.liferay.headless.admin.user.resource.v1_0.RoleResource;
 import com.liferay.headless.admin.user.resource.v1_0.SubscriptionResource;
 import com.liferay.headless.admin.user.resource.v1_0.UserAccountResource;
+import com.liferay.headless.admin.user.resource.v1_0.UserGroupResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.search.Sort;
@@ -101,6 +103,14 @@ public class Mutation {
 
 		_userAccountResourceComponentServiceObjects =
 			userAccountResourceComponentServiceObjects;
+	}
+
+	public static void setUserGroupResourceComponentServiceObjects(
+		ComponentServiceObjects<UserGroupResource>
+			userGroupResourceComponentServiceObjects) {
+
+		_userGroupResourceComponentServiceObjects =
+			userGroupResourceComponentServiceObjects;
 	}
 
 	@GraphQLField(description = "Creates a new account")
@@ -1167,6 +1177,30 @@ public class Mutation {
 				callbackURL, object));
 	}
 
+	@GraphQLField
+	public UserGroup createUserGroup(
+			@GraphQLName("userGroup") UserGroup userGroup)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_userGroupResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			userGroupResource -> userGroupResource.postUserGroup(userGroup));
+	}
+
+	@GraphQLField
+	public Response createUserGroupBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_userGroupResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			userGroupResource -> userGroupResource.postUserGroupBatch(
+				callbackURL, object));
+	}
+
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
 				ComponentServiceObjects<T> componentServiceObjects,
@@ -1289,6 +1323,19 @@ public class Mutation {
 		userAccountResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private void _populateResourceContext(UserGroupResource userGroupResource)
+		throws Exception {
+
+		userGroupResource.setContextAcceptLanguage(_acceptLanguage);
+		userGroupResource.setContextCompany(_company);
+		userGroupResource.setContextHttpServletRequest(_httpServletRequest);
+		userGroupResource.setContextHttpServletResponse(_httpServletResponse);
+		userGroupResource.setContextUriInfo(_uriInfo);
+		userGroupResource.setContextUser(_user);
+		userGroupResource.setGroupLocalService(_groupLocalService);
+		userGroupResource.setRoleLocalService(_roleLocalService);
+	}
+
 	private static ComponentServiceObjects<AccountResource>
 		_accountResourceComponentServiceObjects;
 	private static ComponentServiceObjects<AccountRoleResource>
@@ -1301,6 +1348,8 @@ public class Mutation {
 		_subscriptionResourceComponentServiceObjects;
 	private static ComponentServiceObjects<UserAccountResource>
 		_userAccountResourceComponentServiceObjects;
+	private static ComponentServiceObjects<UserGroupResource>
+		_userGroupResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;
