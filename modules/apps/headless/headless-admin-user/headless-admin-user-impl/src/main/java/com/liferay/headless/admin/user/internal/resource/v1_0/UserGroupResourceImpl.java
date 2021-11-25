@@ -14,9 +14,13 @@
 
 package com.liferay.headless.admin.user.internal.resource.v1_0;
 
+import com.liferay.headless.admin.user.dto.v1_0.UserGroup;
+import com.liferay.headless.admin.user.internal.dto.v1_0.converter.UserGroupResourceDTOConverter;
 import com.liferay.headless.admin.user.resource.v1_0.UserGroupResource;
+import com.liferay.portal.kernel.service.UserGroupService;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -27,4 +31,25 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = UserGroupResource.class
 )
 public class UserGroupResourceImpl extends BaseUserGroupResourceImpl {
+
+	@Override
+	public UserGroup postUserGroup(UserGroup userGroup) throws Exception {
+		return _toUserGroup(
+			_userGroupService.addUserGroup(
+				userGroup.getName(), userGroup.getDescription(), null));
+	}
+
+	private UserGroup _toUserGroup(
+			com.liferay.portal.kernel.model.UserGroup userGroup)
+		throws Exception {
+
+		return _userGroupResourceDTOConverter.toDTO(userGroup);
+	}
+
+	@Reference
+	private UserGroupResourceDTOConverter _userGroupResourceDTOConverter;
+
+	@Reference
+	private UserGroupService _userGroupService;
+
 }
