@@ -39,6 +39,11 @@ public class UserGroupResourceImpl extends BaseUserGroupResourceImpl {
 	}
 
 	@Override
+	public UserGroup getUserGroup(Long userGroupId) throws Exception {
+		return _toUserGroup(_userGroupService.getUserGroup(userGroupId));
+	}
+
+	@Override
 	public UserGroup postUserGroup(UserGroup userGroup) throws Exception {
 		return _toUserGroup(
 			_userGroupService.addUserGroup(
