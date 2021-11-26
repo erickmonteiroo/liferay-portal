@@ -3869,6 +3869,25 @@ paths:
                         application/json: {}
                         application/xml: {}
             tags: ["UserGroup"]
+        get:
+            operationId: getUserGroup
+            parameters:
+                - in: path
+                  name: userGroupId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/UserGroup"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/UserGroup"
+            tags: ["UserGroup"]
     "/web-urls/{webUrlId}":
         get:
             description:
