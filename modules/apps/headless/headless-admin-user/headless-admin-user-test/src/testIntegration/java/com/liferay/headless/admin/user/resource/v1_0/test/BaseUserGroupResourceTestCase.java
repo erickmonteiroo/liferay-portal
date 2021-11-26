@@ -29,6 +29,7 @@ import com.liferay.headless.admin.user.client.resource.v1_0.UserGroupResource;
 import com.liferay.headless.admin.user.client.serdes.v1_0.UserGroupSerDes;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -216,6 +217,12 @@ public abstract class BaseUserGroupResourceTestCase {
 		assertHttpResponseStatusCode(
 			204,
 			userGroupResource.deleteUserGroupHttpResponse(userGroup.getId()));
+
+		assertHttpResponseStatusCode(
+			404, userGroupResource.getUserGroupHttpResponse(userGroup.getId()));
+
+		assertHttpResponseStatusCode(
+			404, userGroupResource.getUserGroupHttpResponse(0L));
 	}
 
 	protected UserGroup testDeleteUserGroup_addUserGroup() throws Exception {
@@ -238,6 +245,77 @@ public abstract class BaseUserGroupResourceTestCase {
 							}
 						})),
 				"JSONObject/data", "Object/deleteUserGroup"));
+
+		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"userGroup",
+					new HashMap<String, Object>() {
+						{
+							put("userGroupId", userGroup.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray.length() > 0);
+	}
+
+	@Test
+	public void testGetUserGroup() throws Exception {
+		UserGroup postUserGroup = testGetUserGroup_addUserGroup();
+
+		UserGroup getUserGroup = userGroupResource.getUserGroup(
+			postUserGroup.getId());
+
+		assertEquals(postUserGroup, getUserGroup);
+		assertValid(getUserGroup);
+	}
+
+	protected UserGroup testGetUserGroup_addUserGroup() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetUserGroup() throws Exception {
+		UserGroup userGroup = testGraphQLUserGroup_addUserGroup();
+
+		Assert.assertTrue(
+			equals(
+				userGroup,
+				UserGroupSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"userGroup",
+								new HashMap<String, Object>() {
+									{
+										put("userGroupId", userGroup.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/userGroup"))));
+	}
+
+	@Test
+	public void testGraphQLGetUserGroupNotFound() throws Exception {
+		Long irrelevantUserGroupId = RandomTestUtil.randomLong();
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"userGroup",
+						new HashMap<String, Object>() {
+							{
+								put("userGroupId", irrelevantUserGroupId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
 	}
 
 	protected UserGroup testGraphQLUserGroup_addUserGroup() throws Exception {
