@@ -3853,6 +3853,22 @@ paths:
                     description:
                         "User group successfully created"
             tags: ["UserGroup"]
+    "/user-groups/{userGroupId}":
+        delete:
+            operationId: deleteUserGroup
+            parameters:
+                - in: path
+                  name: userGroupId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["UserGroup"]
     "/web-urls/{webUrlId}":
         get:
             description:
