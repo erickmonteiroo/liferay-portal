@@ -60,6 +60,11 @@ public interface UserGroupResource {
 	public Response postUserGroupBatch(String callbackURL, Object object)
 		throws Exception;
 
+	public void deleteUserGroup(Long userGroupId) throws Exception;
+
+	public Response deleteUserGroupBatch(String callbackURL, Object object)
+		throws Exception;
+
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
 	}

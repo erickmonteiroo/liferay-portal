@@ -208,6 +208,38 @@ public abstract class BaseUserGroupResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@Test
+	public void testDeleteUserGroup() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		UserGroup userGroup = testDeleteUserGroup_addUserGroup();
+
+		assertHttpResponseStatusCode(
+			204,
+			userGroupResource.deleteUserGroupHttpResponse(userGroup.getId()));
+	}
+
+	protected UserGroup testDeleteUserGroup_addUserGroup() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteUserGroup() throws Exception {
+		UserGroup userGroup = testGraphQLUserGroup_addUserGroup();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteUserGroup",
+						new HashMap<String, Object>() {
+							{
+								put("userGroupId", userGroup.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteUserGroup"));
+	}
+
 	protected UserGroup testGraphQLUserGroup_addUserGroup() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
