@@ -355,7 +355,7 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"externalReferenceCode", "name", "type"};
+		return new String[] {"name", "type"};
 	}
 
 	@Override
