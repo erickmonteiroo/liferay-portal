@@ -18,7 +18,14 @@ import com.liferay.headless.admin.user.dto.v1_0.UserGroup;
 import com.liferay.headless.admin.user.internal.dto.v1_0.converter.UserGroupResourceDTOConverter;
 import com.liferay.headless.admin.user.resource.v1_0.UserGroupResource;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.UserGroupService;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -50,12 +57,38 @@ public class UserGroupResourceImpl extends BaseUserGroupResourceImpl {
 				userGroup.getName(), userGroup.getDescription(), null));
 	}
 
+	private DTOConverterContext _getDTOConverterContext(long userGroupId) {
+		return new DefaultDTOConverterContext(
+			contextAcceptLanguage.isAcceptAllLanguages(),
+			HashMapBuilder.<String, Map<String, String>>put(
+				"delete",
+				addAction(
+					ActionKeys.DELETE, userGroupId, "deleteUserGroup",
+					_userGroupModelResourcePermission)
+			).put(
+				"get",
+				addAction(
+					ActionKeys.VIEW, userGroupId, "getUserGroup",
+					_userGroupModelResourcePermission)
+			).build(),
+			null, contextHttpServletRequest, userGroupId,
+			contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+			contextUser);
+	}
+
 	private UserGroup _toUserGroup(
 			com.liferay.portal.kernel.model.UserGroup userGroup)
 		throws Exception {
 
-		return _userGroupResourceDTOConverter.toDTO(userGroup);
+		return _userGroupResourceDTOConverter.toDTO(
+			_getDTOConverterContext(userGroup.getUserGroupId()), userGroup);
 	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.model.UserGroup)"
+	)
+	private ModelResourcePermission<com.liferay.portal.kernel.model.UserGroup>
+		_userGroupModelResourcePermission;
 
 	@Reference
 	private UserGroupResourceDTOConverter _userGroupResourceDTOConverter;
