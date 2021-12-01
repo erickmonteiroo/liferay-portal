@@ -15,14 +15,34 @@
 package com.liferay.headless.admin.user.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.headless.admin.user.client.dto.v1_0.UserGroup;
 
-import org.junit.Ignore;
 import org.junit.runner.RunWith;
 
 /**
  * @author Javier Gamarra
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class UserGroupResourceTest extends BaseUserGroupResourceTestCase {
+
+	@Override
+	protected UserGroup testGraphQLUserGroup_addUserGroup() throws Exception {
+		return _postUserGroup();
+	}
+
+	@Override
+	protected UserGroup testPostUserGroup_addUserGroup(UserGroup userGroup)
+		throws Exception {
+
+		return _postUserGroup(userGroup);
+	}
+
+	private UserGroup _postUserGroup() throws Exception {
+		return _postUserGroup(randomUserGroup());
+	}
+
+	private UserGroup _postUserGroup(UserGroup userGroup) throws Exception {
+		return userGroupResource.postUserGroup(userGroup);
+	}
+
 }
