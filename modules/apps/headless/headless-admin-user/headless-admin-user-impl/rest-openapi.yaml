@@ -964,6 +964,13 @@ components:
             type: object
         UserGroup:
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
                 description:
                     type: string
                 id:
