@@ -1228,6 +1228,19 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public UserGroup patchUserGroup(
+			@GraphQLName("userGroupId") Long userGroupId,
+			@GraphQLName("userGroup") UserGroup userGroup)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_userGroupResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			userGroupResource -> userGroupResource.patchUserGroup(
+				userGroupId, userGroup));
+	}
+
+	@GraphQLField
 	public UserGroup updateUserGroup(
 			@GraphQLName("userGroupId") Long userGroupId,
 			@GraphQLName("userGroup") UserGroup userGroup)

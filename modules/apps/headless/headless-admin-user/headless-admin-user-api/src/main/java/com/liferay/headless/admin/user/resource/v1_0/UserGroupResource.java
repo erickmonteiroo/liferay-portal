@@ -67,6 +67,9 @@ public interface UserGroupResource {
 
 	public UserGroup getUserGroup(Long userGroupId) throws Exception;
 
+	public UserGroup patchUserGroup(Long userGroupId, UserGroup userGroup)
+		throws Exception;
+
 	public UserGroup putUserGroup(Long userGroupId, UserGroup userGroup)
 		throws Exception;
 

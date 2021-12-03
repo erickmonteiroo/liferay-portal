@@ -233,6 +233,58 @@ public abstract class BaseUserGroupResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-user/v1.0/user-groups/{userGroupId}' -d $'{"description": ___, "name": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "userGroupId"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "UserGroup")}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.PATCH
+	@javax.ws.rs.Path("/user-groups/{userGroupId}")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public UserGroup patchUserGroup(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("userGroupId")
+			Long userGroupId,
+			UserGroup userGroup)
+		throws Exception {
+
+		UserGroup existingUserGroup = getUserGroup(userGroupId);
+
+		if (userGroup.getActions() != null) {
+			existingUserGroup.setActions(userGroup.getActions());
+		}
+
+		if (userGroup.getDescription() != null) {
+			existingUserGroup.setDescription(userGroup.getDescription());
+		}
+
+		if (userGroup.getName() != null) {
+			existingUserGroup.setName(userGroup.getName());
+		}
+
+		if (userGroup.getUsersCount() != null) {
+			existingUserGroup.setUsersCount(userGroup.getUsersCount());
+		}
+
+		preparePatch(userGroup, existingUserGroup);
+
+		return putUserGroup(userGroupId, existingUserGroup);
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-user/v1.0/user-groups/{userGroupId}' -d $'{"description": ___, "name": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
@@ -513,6 +565,10 @@ public abstract class BaseUserGroupResourceImpl
 
 		return addAction(
 			actionName, siteId, methodName, null, permissionName, siteId);
+	}
+
+	protected void preparePatch(
+		UserGroup userGroup, UserGroup existingUserGroup) {
 	}
 
 	protected <T, R> List<R> transform(
