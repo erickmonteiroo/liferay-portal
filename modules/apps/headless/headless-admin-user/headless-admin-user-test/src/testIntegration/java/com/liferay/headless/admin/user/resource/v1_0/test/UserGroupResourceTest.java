@@ -26,6 +26,11 @@ import org.junit.runner.RunWith;
 public class UserGroupResourceTest extends BaseUserGroupResourceTestCase {
 
 	@Override
+	protected UserGroup testDeleteUserGroup_addUserGroup() throws Exception {
+		return _postUserGroup();
+	}
+
+	@Override
 	protected UserGroup testGraphQLUserGroup_addUserGroup() throws Exception {
 		return _postUserGroup();
 	}
