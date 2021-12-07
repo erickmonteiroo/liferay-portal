@@ -46,6 +46,11 @@ public class UserGroupResourceTest extends BaseUserGroupResourceTestCase {
 	}
 
 	@Override
+	protected UserGroup testPatchUserGroup_addUserGroup() throws Exception {
+		return _postUserGroup();
+	}
+
+	@Override
 	protected UserGroup testPostUserGroup_addUserGroup(UserGroup userGroup)
 		throws Exception {
 
