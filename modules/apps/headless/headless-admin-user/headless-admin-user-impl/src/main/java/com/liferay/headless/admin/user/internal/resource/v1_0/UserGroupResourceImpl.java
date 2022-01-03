@@ -115,6 +115,12 @@ public class UserGroupResourceImpl extends BaseUserGroupResourceImpl {
 					ActionKeys.VIEW, userGroupId, "getUserGroup",
 					_userGroupModelResourcePermission)
 			).put(
+				"get-by-external-reference-code",
+				addAction(
+					ActionKeys.VIEW, userGroupId,
+					"getUserGroupByExternalReferenceCode",
+					_userGroupModelResourcePermission)
+			).put(
 				"patch",
 				addAction(
 					ActionKeys.UPDATE, userGroupId, "patchUserGroup",
