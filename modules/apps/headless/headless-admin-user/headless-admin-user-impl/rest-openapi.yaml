@@ -3859,6 +3859,25 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/UserGroup"
             tags: ["UserGroup"]
+    "/user-groups/by-external-reference-code/{externalReferenceCode}":
+        get:
+            operationId: getUserGroupByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/UserGroup"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/UserGroup"
+            tags: ["UserGroup"]
     "/user-groups/{userGroupId}":
         delete:
             operationId: deleteUserGroup
