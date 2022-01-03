@@ -98,6 +98,13 @@ public class UserGroupResourceTest extends BaseUserGroupResourceTestCase {
 	}
 
 	@Override
+	protected UserGroup testGetUserGroupByExternalReferenceCode_addUserGroup()
+		throws Exception {
+
+		return _postUserGroup();
+	}
+
+	@Override
 	protected UserGroup testGraphQLUserGroup_addUserGroup() throws Exception {
 		return _postUserGroup();
 	}
@@ -106,13 +113,7 @@ public class UserGroupResourceTest extends BaseUserGroupResourceTestCase {
 	protected UserGroup testPatchUserGroup_addUserGroup() throws Exception {
 		return _postUserGroup();
 	}
-	
-	@Override
-	protected UserGroup testGetUserGroupByExternalReferenceCode_addUserGroup()
-		throws Exception {
-		return _postUserGroup();
-	}
-	
+
 	@Override
 	protected UserGroup testPostUserGroup_addUserGroup(UserGroup userGroup)
 		throws Exception {
