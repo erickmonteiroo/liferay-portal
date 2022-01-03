@@ -60,6 +60,15 @@ public class UserGroupResourceImpl extends BaseUserGroupResourceImpl {
 	}
 
 	@Override
+	public UserGroup getUserGroupByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception {
+
+		return _toUserGroup(
+			_userGroupResourceDTOConverter.getObject(externalReferenceCode));
+	}
+
+	@Override
 	public UserGroup postUserGroup(UserGroup userGroup) throws Exception {
 		return _toUserGroup(
 			_userGroupService.updateExternalReferenceCode(
