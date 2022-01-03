@@ -47,6 +47,16 @@ public class UserGroupResourceImpl extends BaseUserGroupResourceImpl {
 		_userGroupService.deleteUserGroup(userGroupId);
 	}
 
+	@Override
+	public void deleteUserGroupByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception {
+
+		deleteUserGroup(
+			_userGroupResourceDTOConverter.getUserGroupId(
+				externalReferenceCode));
+	}
+
 	public void deleteUserGroupUsers(Long userGroupId, Long[] userIds)
 		throws Exception {
 
