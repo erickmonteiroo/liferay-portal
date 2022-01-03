@@ -60,6 +60,10 @@ public interface UserGroupResource {
 	public Response postUserGroupBatch(String callbackURL, Object object)
 		throws Exception;
 
+	public void deleteUserGroupByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
 	public UserGroup getUserGroupByExternalReferenceCode(
 			String externalReferenceCode)
 		throws Exception;
