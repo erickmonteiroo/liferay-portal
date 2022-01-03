@@ -3860,6 +3860,20 @@ paths:
                                 $ref: "#/components/schemas/UserGroup"
             tags: ["UserGroup"]
     "/user-groups/by-external-reference-code/{externalReferenceCode}":
+        delete:
+            operationId: deleteUserGroupByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["UserGroup"]
         get:
             operationId: getUserGroupByExternalReferenceCode
             parameters:
