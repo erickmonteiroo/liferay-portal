@@ -18,9 +18,12 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.user.client.dto.v1_0.UserGroup;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.test.rule.Inject;
+
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -31,6 +34,28 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class UserGroupResourceTest extends BaseUserGroupResourceTestCase {
+
+	@Override
+	@Test
+	public void testDeleteUserGroupUsers() throws Exception {
+		UserGroup userGroup = testDeleteUserGroupUsers_addUserGroup();
+
+		User user = UserTestUtil.addUser();
+
+		_userLocalService.addUserGroupUser(userGroup.getId(), user.getUserId());
+
+		List<User> userList = _userLocalService.getUserGroupUsers(
+			userGroup.getId());
+
+		Assert.assertTrue(userList.contains(user));
+
+		userGroupResource.deleteUserGroupUsers(
+			userGroup.getId(), new Long[] {user.getUserId()});
+
+		userList = _userLocalService.getUserGroupUsers(userGroup.getId());
+
+		Assert.assertFalse(userList.contains(user));
+	}
 
 	@Override
 	@Test
@@ -57,6 +82,13 @@ public class UserGroupResourceTest extends BaseUserGroupResourceTestCase {
 
 	@Override
 	protected UserGroup testDeleteUserGroup_addUserGroup() throws Exception {
+		return _postUserGroup();
+	}
+
+	@Override
+	protected UserGroup testDeleteUserGroupUsers_addUserGroup()
+		throws Exception {
+
 		return _postUserGroup();
 	}
 
@@ -102,5 +134,8 @@ public class UserGroupResourceTest extends BaseUserGroupResourceTestCase {
 
 	@Inject
 	private UserGroupLocalService _userGroupLocalService;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }
