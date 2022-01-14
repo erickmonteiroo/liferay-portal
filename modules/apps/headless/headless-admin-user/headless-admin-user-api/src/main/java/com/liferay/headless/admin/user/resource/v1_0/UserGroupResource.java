@@ -76,6 +76,9 @@ public interface UserGroupResource {
 	public Response putUserGroupBatch(String callbackURL, Object object)
 		throws Exception;
 
+	public void deleteUserGroupUsers(Long userGroupId, Long[] longs)
+		throws Exception;
+
 	public void postUserGroupUsers(Long userGroupId, Long[] longs)
 		throws Exception;
 

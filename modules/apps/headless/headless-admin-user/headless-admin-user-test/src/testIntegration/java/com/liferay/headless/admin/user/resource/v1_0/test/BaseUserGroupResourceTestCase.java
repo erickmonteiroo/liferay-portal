@@ -370,6 +370,24 @@ public abstract class BaseUserGroupResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteUserGroupUsers() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		UserGroup userGroup = testDeleteUserGroupUsers_addUserGroup();
+
+		assertHttpResponseStatusCode(
+			204,
+			userGroupResource.deleteUserGroupUsersHttpResponse(
+				userGroup.getId(), null));
+	}
+
+	protected UserGroup testDeleteUserGroupUsers_addUserGroup()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPostUserGroupUsers() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		UserGroup userGroup = testPostUserGroupUsers_addUserGroup();

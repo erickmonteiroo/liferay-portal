@@ -1267,6 +1267,21 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public boolean deleteUserGroupUsers(
+			@GraphQLName("userGroupId") Long userGroupId,
+			@GraphQLName("longs") Long[] longs)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_userGroupResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			userGroupResource -> userGroupResource.deleteUserGroupUsers(
+				userGroupId, longs));
+
+		return true;
+	}
+
+	@GraphQLField
 	public boolean createUserGroupUsers(
 			@GraphQLName("userGroupId") Long userGroupId,
 			@GraphQLName("longs") Long[] longs)
