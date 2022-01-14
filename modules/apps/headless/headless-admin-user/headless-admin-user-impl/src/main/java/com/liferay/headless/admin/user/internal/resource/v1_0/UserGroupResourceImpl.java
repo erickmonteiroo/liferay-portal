@@ -47,6 +47,13 @@ public class UserGroupResourceImpl extends BaseUserGroupResourceImpl {
 		_userGroupService.deleteUserGroup(userGroupId);
 	}
 
+	public void deleteUserGroupUsers(Long userGroupId, Long[] userIds)
+		throws Exception {
+
+		_userService.unsetUserGroupUsers(
+			userGroupId, ArrayUtil.toArray(userIds));
+	}
+
 	@Override
 	public UserGroup getUserGroup(Long userGroupId) throws Exception {
 		return _toUserGroup(_userGroupService.getUserGroup(userGroupId));
