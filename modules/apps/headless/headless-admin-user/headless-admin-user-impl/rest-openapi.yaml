@@ -3947,6 +3947,35 @@ paths:
                                 $ref: "#/components/schemas/UserGroup"
             tags: ["UserGroup"]
     "/user-groups/{userGroupId}/user-group-users":
+        delete:
+            operationId: deleteUserGroupUsers
+            parameters:
+                - in: path
+                  name: userGroupId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            items:
+                                format: int64
+                                type: integer
+                            type: array
+                    application/xml:
+                        schema:
+                            items:
+                                format: int64
+                                type: integer
+                            type: array
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["UserGroup"]
         post:
             operationId: postUserGroupUsers
             parameters:
