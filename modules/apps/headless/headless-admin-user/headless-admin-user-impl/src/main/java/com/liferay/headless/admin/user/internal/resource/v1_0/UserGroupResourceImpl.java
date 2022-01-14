@@ -92,6 +92,11 @@ public class UserGroupResourceImpl extends BaseUserGroupResourceImpl {
 					ActionKeys.DELETE, userGroupId, "deleteUserGroup",
 					_userGroupModelResourcePermission)
 			).put(
+				"delete-user-group-users",
+				addAction(
+					ActionKeys.ASSIGN_MEMBERS, userGroupId,
+					"deleteUserGroupUsers", _userGroupModelResourcePermission)
+			).put(
 				"get",
 				addAction(
 					ActionKeys.VIEW, userGroupId, "getUserGroup",
