@@ -18,14 +18,23 @@ import com.liferay.headless.admin.user.dto.v1_0.UserGroup;
 import com.liferay.headless.admin.user.internal.dto.v1_0.converter.UserGroupResourceDTOConverter;
 import com.liferay.headless.admin.user.resource.v1_0.UserGroupResource;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.UserGroupService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.Map;
 
@@ -77,6 +86,42 @@ public class UserGroupResourceImpl extends BaseUserGroupResourceImpl {
 
 		return _toUserGroup(
 			_userGroupResourceDTOConverter.getObject(externalReferenceCode));
+	}
+
+	@Override
+	public Page<UserGroup> getUserGroupsPage(
+			String search, Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		return SearchUtil.search(
+			HashMapBuilder.<String, Map<String, String>>put(
+				"create",
+				addAction(
+					ActionKeys.ADD_USER_GROUP, "postUserGroup",
+					PortletKeys.PORTAL, 0L)
+			).put(
+				"get",
+				addAction(
+					ActionKeys.VIEW, 0L, "getUserGroupsPage",
+					_userGroupModelResourcePermission)
+			).build(),
+			booleanQuery -> {
+			},
+			filter, com.liferay.portal.kernel.model.UserGroup.class.getName(),
+			search, pagination,
+			queryConfig -> {
+			},
+			searchContext -> {
+				searchContext.setCompanyId(contextCompany.getCompanyId());
+
+				if (Validator.isNotNull(search)) {
+					searchContext.setKeywords(search);
+				}
+			},
+			sorts,
+			document -> _toUserGroup(
+				_userGroupService.getUserGroup(
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
 	@Override
