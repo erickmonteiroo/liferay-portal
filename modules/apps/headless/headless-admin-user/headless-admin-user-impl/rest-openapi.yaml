@@ -3839,6 +3839,43 @@ paths:
                                 type: array
             tags: ["WebUrl"]
     "/user-groups":
+        get:
+            operationId: getUserGroupsPage
+            parameters:
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/UserGroup"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/UserGroup"
+                                type: array
+            tags: ["UserGroup"]
         post:
             operationId: postUserGroup
             requestBody:
