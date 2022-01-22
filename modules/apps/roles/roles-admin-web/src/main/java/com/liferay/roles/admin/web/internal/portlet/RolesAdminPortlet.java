@@ -654,6 +654,25 @@ public class RolesAdminPortlet extends MVCPortlet {
 		_userService = userService;
 	}
 
+	private String[] _getExcludedPanelAppKeys(Role role) {
+		Set<String> panelAppKeys = new HashSet<>();
+
+		for (PanelCategoryRoleTypeMapper panelCategoryRoleTypeMapper :
+				_panelCategoryRoleTypeMapperServiceTrackerList) {
+
+			if (ArrayUtil.contains(
+					panelCategoryRoleTypeMapper.getRoleTypes(),
+					role.getType())) {
+
+				Collections.addAll(
+					panelAppKeys,
+					panelCategoryRoleTypeMapper.getExcludedPanelAppKeys(role));
+			}
+		}
+
+		return panelAppKeys.toArray(new String[0]);
+	}
+
 	private String[] _getPanelCategoryKeys(int type) {
 		Set<String> panelCategoryKeys = new HashSet<>();
 
@@ -729,6 +748,9 @@ public class RolesAdminPortlet extends MVCPortlet {
 		String mvcPath = ParamUtil.getString(portletRequest, "mvcPath");
 
 		if (mvcPath.equals("/edit_role_permissions.jsp")) {
+			portletRequest.setAttribute(
+				RolesAdminWebKeys.EXCLUDED_PANEL_APP_KEYS,
+				_getExcludedPanelAppKeys(role));
 			portletRequest.setAttribute(
 				RolesAdminWebKeys.PANEL_CATEGORY_KEYS,
 				_getPanelCategoryKeys(type));
