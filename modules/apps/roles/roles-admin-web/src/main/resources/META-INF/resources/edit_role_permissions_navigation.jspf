@@ -345,6 +345,8 @@ PersonalMenuEntryHelper personalMenuEntryHelper = (PersonalMenuEntryHelper)reque
 			<c:if test="<%= !roleDisplayContext.isAccountRoleGroupScope() %>">
 
 				<%
+				String[] excludedPanelAppKeys = (String[])request.getAttribute(RolesAdminWebKeys.EXCLUDED_PANEL_APP_KEYS);
+
 				for (String panelCategoryKey : (String[])request.getAttribute(RolesAdminWebKeys.PANEL_CATEGORY_KEYS)) {
 					PanelCategory panelCategory = panelCategoryRegistry.getPanelCategory(panelCategoryKey);
 
@@ -374,7 +376,7 @@ PersonalMenuEntryHelper personalMenuEntryHelper = (PersonalMenuEntryHelper)reque
 											String controlPanelEntryClassName = panelAppPortlet.getControlPanelEntryClass();
 											ControlPanelEntry controlPanelEntry = panelAppPortlet.getControlPanelEntryInstance();
 
-											if (Objects.equals(controlPanelEntryClassName, AdministratorControlPanelEntry.class.getName()) || Objects.equals(controlPanelEntryClassName, OmniadminControlPanelEntry.class.getName()) || AdministratorControlPanelEntry.class.isAssignableFrom(controlPanelEntry.getClass()) || OmniadminControlPanelEntry.class.isAssignableFrom(controlPanelEntry.getClass())) {
+											if (Objects.equals(controlPanelEntryClassName, AdministratorControlPanelEntry.class.getName()) || Objects.equals(controlPanelEntryClassName, OmniadminControlPanelEntry.class.getName()) || AdministratorControlPanelEntry.class.isAssignableFrom(controlPanelEntry.getClass()) || OmniadminControlPanelEntry.class.isAssignableFrom(controlPanelEntry.getClass()) || ArrayUtil.contains(excludedPanelAppKeys, panelApp.getPortletId())) {
 												continue;
 											}
 
