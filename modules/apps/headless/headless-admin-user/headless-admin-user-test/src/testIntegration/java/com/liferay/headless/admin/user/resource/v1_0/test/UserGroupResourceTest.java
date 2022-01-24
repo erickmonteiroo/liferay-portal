@@ -86,6 +86,14 @@ public class UserGroupResourceTest extends BaseUserGroupResourceTestCase {
 	}
 
 	@Override
+	protected UserGroup
+			testDeleteUserGroupByExternalReferenceCode_addUserGroup()
+		throws Exception {
+
+		return _postUserGroup();
+	}
+
+	@Override
 	protected UserGroup testDeleteUserGroupUsers_addUserGroup()
 		throws Exception {
 
