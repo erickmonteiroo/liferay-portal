@@ -57,6 +57,7 @@ public class UserGroupResourceImpl extends BaseUserGroupResourceImpl {
 				externalReferenceCode));
 	}
 
+	@Override
 	public void deleteUserGroupUsers(Long userGroupId, Long[] userIds)
 		throws Exception {
 
