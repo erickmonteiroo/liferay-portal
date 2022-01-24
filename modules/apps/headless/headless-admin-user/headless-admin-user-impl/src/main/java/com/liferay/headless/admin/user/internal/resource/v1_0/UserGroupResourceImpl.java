@@ -115,6 +115,12 @@ public class UserGroupResourceImpl extends BaseUserGroupResourceImpl {
 					ActionKeys.DELETE, userGroupId, "deleteUserGroup",
 					_userGroupModelResourcePermission)
 			).put(
+				"delete-by-external-reference-code",
+				addAction(
+					ActionKeys.DELETE, userGroupId,
+					"deleteUserGroupByExternalReferenceCode",
+					_userGroupModelResourcePermission)
+			).put(
 				"delete-user-group-users",
 				addAction(
 					ActionKeys.ASSIGN_MEMBERS, userGroupId,
