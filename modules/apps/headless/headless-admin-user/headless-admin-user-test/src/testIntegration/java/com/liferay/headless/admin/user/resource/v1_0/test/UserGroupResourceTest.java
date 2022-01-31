@@ -19,6 +19,7 @@ import com.liferay.headless.admin.user.client.dto.v1_0.UserGroup;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -32,6 +33,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Javier Gamarra
  */
+@DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class UserGroupResourceTest extends BaseUserGroupResourceTestCase {
 
@@ -81,6 +83,11 @@ public class UserGroupResourceTest extends BaseUserGroupResourceTestCase {
 	}
 
 	@Override
+	protected String[] getIgnoredEntityFieldNames() {
+		return new String[] {"description"};
+	}
+
+	@Override
 	protected UserGroup testDeleteUserGroup_addUserGroup() throws Exception {
 		return _postUserGroup();
 	}
@@ -110,6 +117,13 @@ public class UserGroupResourceTest extends BaseUserGroupResourceTestCase {
 		throws Exception {
 
 		return _postUserGroup();
+	}
+
+	@Override
+	protected UserGroup testGetUserGroupsPage_addUserGroup(UserGroup userGroup)
+		throws Exception {
+
+		return _postUserGroup(userGroup);
 	}
 
 	@Override
