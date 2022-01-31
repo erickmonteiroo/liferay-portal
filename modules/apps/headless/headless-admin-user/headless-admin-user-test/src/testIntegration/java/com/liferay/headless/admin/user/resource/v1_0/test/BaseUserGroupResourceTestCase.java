@@ -25,8 +25,10 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import com.liferay.headless.admin.user.client.dto.v1_0.UserGroup;
 import com.liferay.headless.admin.user.client.http.HttpInvoker;
 import com.liferay.headless.admin.user.client.pagination.Page;
+import com.liferay.headless.admin.user.client.pagination.Pagination;
 import com.liferay.headless.admin.user.client.resource.v1_0.UserGroupResource;
 import com.liferay.headless.admin.user.client.serdes.v1_0.UserGroupSerDes;
+import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -41,10 +43,12 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -55,6 +59,8 @@ import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,7 +72,9 @@ import javax.annotation.Generated;
 
 import javax.ws.rs.core.MultivaluedHashMap;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.BeanUtilsBean;
+import org.apache.commons.lang.time.DateUtils;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -191,6 +199,289 @@ public abstract class BaseUserGroupResourceTestCase {
 		Assert.assertEquals(regex, userGroup.getDescription());
 		Assert.assertEquals(regex, userGroup.getExternalReferenceCode());
 		Assert.assertEquals(regex, userGroup.getName());
+	}
+
+	@Test
+	public void testGetUserGroupsPage() throws Exception {
+		Page<UserGroup> page = userGroupResource.getUserGroupsPage(
+			null, null, Pagination.of(1, 10), null);
+
+		long totalCount = page.getTotalCount();
+
+		UserGroup userGroup1 = testGetUserGroupsPage_addUserGroup(
+			randomUserGroup());
+
+		UserGroup userGroup2 = testGetUserGroupsPage_addUserGroup(
+			randomUserGroup());
+
+		page = userGroupResource.getUserGroupsPage(
+			null, null, Pagination.of(1, 10), null);
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(userGroup1, (List<UserGroup>)page.getItems());
+		assertContains(userGroup2, (List<UserGroup>)page.getItems());
+		assertValid(page);
+
+		userGroupResource.deleteUserGroup(userGroup1.getId());
+
+		userGroupResource.deleteUserGroup(userGroup2.getId());
+	}
+
+	@Test
+	public void testGetUserGroupsPageWithFilterDateTimeEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DATE_TIME);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		UserGroup userGroup1 = randomUserGroup();
+
+		userGroup1 = testGetUserGroupsPage_addUserGroup(userGroup1);
+
+		for (EntityField entityField : entityFields) {
+			Page<UserGroup> page = userGroupResource.getUserGroupsPage(
+				null, getFilterString(entityField, "between", userGroup1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(userGroup1),
+				(List<UserGroup>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetUserGroupsPageWithFilterStringEquals() throws Exception {
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.STRING);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		UserGroup userGroup1 = testGetUserGroupsPage_addUserGroup(
+			randomUserGroup());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		UserGroup userGroup2 = testGetUserGroupsPage_addUserGroup(
+			randomUserGroup());
+
+		for (EntityField entityField : entityFields) {
+			Page<UserGroup> page = userGroupResource.getUserGroupsPage(
+				null, getFilterString(entityField, "eq", userGroup1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(userGroup1),
+				(List<UserGroup>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetUserGroupsPageWithPagination() throws Exception {
+		Page<UserGroup> totalPage = userGroupResource.getUserGroupsPage(
+			null, null, null, null);
+
+		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+
+		UserGroup userGroup1 = testGetUserGroupsPage_addUserGroup(
+			randomUserGroup());
+
+		UserGroup userGroup2 = testGetUserGroupsPage_addUserGroup(
+			randomUserGroup());
+
+		UserGroup userGroup3 = testGetUserGroupsPage_addUserGroup(
+			randomUserGroup());
+
+		Page<UserGroup> page1 = userGroupResource.getUserGroupsPage(
+			null, null, Pagination.of(1, totalCount + 2), null);
+
+		List<UserGroup> userGroups1 = (List<UserGroup>)page1.getItems();
+
+		Assert.assertEquals(
+			userGroups1.toString(), totalCount + 2, userGroups1.size());
+
+		Page<UserGroup> page2 = userGroupResource.getUserGroupsPage(
+			null, null, Pagination.of(2, totalCount + 2), null);
+
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+		List<UserGroup> userGroups2 = (List<UserGroup>)page2.getItems();
+
+		Assert.assertEquals(userGroups2.toString(), 1, userGroups2.size());
+
+		Page<UserGroup> page3 = userGroupResource.getUserGroupsPage(
+			null, null, Pagination.of(1, totalCount + 3), null);
+
+		assertContains(userGroup1, (List<UserGroup>)page3.getItems());
+		assertContains(userGroup2, (List<UserGroup>)page3.getItems());
+		assertContains(userGroup3, (List<UserGroup>)page3.getItems());
+	}
+
+	@Test
+	public void testGetUserGroupsPageWithSortDateTime() throws Exception {
+		testGetUserGroupsPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, userGroup1, userGroup2) -> {
+				BeanUtils.setProperty(
+					userGroup1, entityField.getName(),
+					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetUserGroupsPageWithSortInteger() throws Exception {
+		testGetUserGroupsPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, userGroup1, userGroup2) -> {
+				BeanUtils.setProperty(userGroup1, entityField.getName(), 0);
+				BeanUtils.setProperty(userGroup2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetUserGroupsPageWithSortString() throws Exception {
+		testGetUserGroupsPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, userGroup1, userGroup2) -> {
+				Class<?> clazz = userGroup1.getClass();
+
+				String entityFieldName = entityField.getName();
+
+				java.lang.reflect.Method method = clazz.getMethod(
+					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanUtils.setProperty(
+						userGroup1, entityFieldName,
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanUtils.setProperty(
+						userGroup2, entityFieldName,
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else if (entityFieldName.contains("email")) {
+					BeanUtils.setProperty(
+						userGroup1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+					BeanUtils.setProperty(
+						userGroup2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+				}
+				else {
+					BeanUtils.setProperty(
+						userGroup1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+					BeanUtils.setProperty(
+						userGroup2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+				}
+			});
+	}
+
+	protected void testGetUserGroupsPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer<EntityField, UserGroup, UserGroup, Exception>
+				unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		UserGroup userGroup1 = randomUserGroup();
+		UserGroup userGroup2 = randomUserGroup();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(entityField, userGroup1, userGroup2);
+		}
+
+		userGroup1 = testGetUserGroupsPage_addUserGroup(userGroup1);
+
+		userGroup2 = testGetUserGroupsPage_addUserGroup(userGroup2);
+
+		for (EntityField entityField : entityFields) {
+			Page<UserGroup> ascPage = userGroupResource.getUserGroupsPage(
+				null, null, Pagination.of(1, 2),
+				entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(userGroup1, userGroup2),
+				(List<UserGroup>)ascPage.getItems());
+
+			Page<UserGroup> descPage = userGroupResource.getUserGroupsPage(
+				null, null, Pagination.of(1, 2),
+				entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(userGroup2, userGroup1),
+				(List<UserGroup>)descPage.getItems());
+		}
+	}
+
+	protected UserGroup testGetUserGroupsPage_addUserGroup(UserGroup userGroup)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetUserGroupsPage() throws Exception {
+		GraphQLField graphQLField = new GraphQLField(
+			"userGroups",
+			new HashMap<String, Object>() {
+				{
+					put("page", 1);
+					put("pageSize", 10);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		JSONObject userGroupsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/userGroups");
+
+		long totalCount = userGroupsJSONObject.getLong("totalCount");
+
+		UserGroup userGroup1 = testGraphQLUserGroup_addUserGroup();
+		UserGroup userGroup2 = testGraphQLUserGroup_addUserGroup();
+
+		userGroupsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/userGroups");
+
+		Assert.assertEquals(
+			totalCount + 2, userGroupsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			userGroup1,
+			Arrays.asList(
+				UserGroupSerDes.toDTOs(
+					userGroupsJSONObject.getString("items"))));
+		assertContains(
+			userGroup2,
+			Arrays.asList(
+				UserGroupSerDes.toDTOs(
+					userGroupsJSONObject.getString("items"))));
 	}
 
 	@Test
@@ -512,6 +803,9 @@ public abstract class BaseUserGroupResourceTestCase {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
+
+	@Rule
+	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	protected UserGroup testGraphQLUserGroup_addUserGroup() throws Exception {
 		throw new UnsupportedOperationException(
