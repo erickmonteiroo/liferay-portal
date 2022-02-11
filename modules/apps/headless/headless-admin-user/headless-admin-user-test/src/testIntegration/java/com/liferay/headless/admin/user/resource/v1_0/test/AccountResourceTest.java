@@ -15,6 +15,7 @@
 package com.liferay.headless.admin.user.resource.v1_0.test;
 
 import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.exception.DuplicateAccountEntryExternalReferenceCodeException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryModel;
 import com.liferay.account.service.AccountEntryLocalService;
@@ -293,7 +294,12 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 			Assert.fail();
 		}
 		catch (Problem.ProblemException problemException) {
-			Assert.assertNotNull(problemException);
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals(
+				DuplicateAccountEntryExternalReferenceCodeException.class.
+					getSimpleName(),
+				problem.getType());
 		}
 	}
 
