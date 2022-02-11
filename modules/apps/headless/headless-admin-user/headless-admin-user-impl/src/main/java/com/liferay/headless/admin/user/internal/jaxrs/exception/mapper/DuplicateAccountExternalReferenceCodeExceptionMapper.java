@@ -44,8 +44,10 @@ public class DuplicateAccountExternalReferenceCodeExceptionMapper
 			duplicateAccountEntryExternalReferenceCodeException) {
 
 		return new Problem(
-			Response.Status.BAD_REQUEST,
-			duplicateAccountEntryExternalReferenceCodeException.getMessage());
+			null, Response.Status.BAD_REQUEST,
+			duplicateAccountEntryExternalReferenceCodeException.getMessage(),
+			DuplicateAccountEntryExternalReferenceCodeException.class.
+				getSimpleName());
 	}
 
 }
