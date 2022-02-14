@@ -135,6 +135,10 @@ public class AccountGroupServiceTest {
 				_user.getCompanyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				orderByComparator);
 
+		expectedAccountGroups = ListUtil.filter(
+			expectedAccountGroups,
+			accountGroup -> !accountGroup.isDefaultAccountGroup());
+
 		Assert.assertEquals(
 			expectedAccountGroups.size(), baseModelSearchResult.getLength());
 		Assert.assertEquals(

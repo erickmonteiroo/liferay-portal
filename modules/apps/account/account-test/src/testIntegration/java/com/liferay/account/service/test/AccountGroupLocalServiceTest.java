@@ -145,13 +145,16 @@ public class AccountGroupLocalServiceTest {
 		_addAccountGroup();
 
 		OrderByComparator<AccountGroup> orderByComparator =
-			OrderByComparatorFactoryUtil.create(
-				"AccountGroup", "createDate", true);
+			OrderByComparatorFactoryUtil.create("AccountGroup", "name", true);
 
 		List<AccountGroup> expectedAccountGroups =
 			_accountGroupLocalService.getAccountGroups(
 				TestPropsValues.getCompanyId(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, orderByComparator);
+
+		expectedAccountGroups = ListUtil.filter(
+			expectedAccountGroups,
+			accountGroup -> !accountGroup.isDefaultAccountGroup());
 
 		BaseModelSearchResult<AccountGroup> baseModelSearchResult =
 			_accountGroupLocalService.searchAccountGroups(
