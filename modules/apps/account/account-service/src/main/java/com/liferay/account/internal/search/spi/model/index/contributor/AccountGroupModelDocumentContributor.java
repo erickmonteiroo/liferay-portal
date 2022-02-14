@@ -37,6 +37,8 @@ public class AccountGroupModelDocumentContributor
 		document.addText(Field.DESCRIPTION, accountGroup.getDescription());
 		document.addText(Field.NAME, accountGroup.getName());
 		document.addKeyword(Field.TYPE, accountGroup.getType());
+		document.addKeyword(
+			"defaultAccountGroup", accountGroup.isDefaultAccountGroup());
 	}
 
 }
