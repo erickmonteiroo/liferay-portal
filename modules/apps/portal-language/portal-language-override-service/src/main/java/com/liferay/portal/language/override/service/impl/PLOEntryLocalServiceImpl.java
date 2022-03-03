@@ -111,6 +111,10 @@ public class PLOEntryLocalServiceImpl extends PLOEntryLocalServiceBaseImpl {
 	}
 
 	@Override
+	public int getPLOEntriesCount(long companyId) {
+	}
+
+	@Override
 	public void setPLOEntries(
 			long companyId, long userId, String key,
 			Map<Locale, String> localizationMap)
