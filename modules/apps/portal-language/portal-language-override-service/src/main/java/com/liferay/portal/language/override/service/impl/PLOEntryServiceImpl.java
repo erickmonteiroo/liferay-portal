@@ -65,6 +65,10 @@ public class PLOEntryServiceImpl extends PLOEntryServiceBaseImpl {
 	}
 
 	@Override
+	public int getPLOEntriesCount(long companyId) throws PortalException {
+	}
+
+	@Override
 	public void setPLOEntries(String key, Map<Locale, String> localizationMap)
 		throws PortalException {
 
