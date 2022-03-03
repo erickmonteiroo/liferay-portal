@@ -22,6 +22,7 @@ import com.liferay.portal.language.override.constants.PLOActionKeys;
 import com.liferay.portal.language.override.model.PLOEntry;
 import com.liferay.portal.language.override.service.base.PLOEntryServiceBaseImpl;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -62,6 +63,10 @@ public class PLOEntryServiceImpl extends PLOEntryServiceBaseImpl {
 
 		return ploEntryLocalService.deletePLOEntry(
 			permissionChecker.getCompanyId(), key, languageId);
+	}
+
+	@Override
+	public List<PLOEntry> getPLOEntries(long companyId) throws PortalException {
 	}
 
 	@Override
