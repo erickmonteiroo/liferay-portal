@@ -60,6 +60,14 @@ public class PLOEntryServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.portal.language.override.model.PLOEntry>
+			getPLOEntries(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ploEntryService.getPLOEntries(companyId);
+	}
+
+	@Override
 	public int getPLOEntriesCount(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

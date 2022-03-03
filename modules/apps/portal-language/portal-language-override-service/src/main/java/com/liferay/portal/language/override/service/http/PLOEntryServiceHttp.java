@@ -126,6 +126,48 @@ public class PLOEntryServiceHttp {
 		}
 	}
 
+	public static java.util.List
+		<com.liferay.portal.language.override.model.PLOEntry> getPLOEntries(
+				HttpPrincipal httpPrincipal, long companyId)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				PLOEntryServiceUtil.class, "getPLOEntries",
+				_getPLOEntriesParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, companyId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (java.util.List
+				<com.liferay.portal.language.override.model.PLOEntry>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static int getPLOEntriesCount(
 			HttpPrincipal httpPrincipal, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -133,7 +175,7 @@ public class PLOEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				PLOEntryServiceUtil.class, "getPLOEntriesCount",
-				_getPLOEntriesCountParameterTypes2);
+				_getPLOEntriesCountParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId);
@@ -174,7 +216,7 @@ public class PLOEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				PLOEntryServiceUtil.class, "setPLOEntries",
-				_setPLOEntriesParameterTypes3);
+				_setPLOEntriesParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, key, localizationMap);
@@ -209,9 +251,11 @@ public class PLOEntryServiceHttp {
 		new Class[] {String.class};
 	private static final Class<?>[] _deletePLOEntryParameterTypes1 =
 		new Class[] {String.class, String.class};
-	private static final Class<?>[] _getPLOEntriesCountParameterTypes2 =
+	private static final Class<?>[] _getPLOEntriesParameterTypes2 =
 		new Class[] {long.class};
-	private static final Class<?>[] _setPLOEntriesParameterTypes3 =
+	private static final Class<?>[] _getPLOEntriesCountParameterTypes3 =
+		new Class[] {long.class};
+	private static final Class<?>[] _setPLOEntriesParameterTypes4 =
 		new Class[] {String.class, java.util.Map.class};
 
 }

@@ -17,6 +17,7 @@ package com.liferay.portal.language.override.service;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.language.override.model.PLOEntry;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -55,6 +56,12 @@ public class PLOEntryServiceUtil {
 	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static List<PLOEntry> getPLOEntries(long companyId)
+		throws PortalException {
+
+		return getService().getPLOEntries(companyId);
 	}
 
 	public static int getPLOEntriesCount(long companyId)
