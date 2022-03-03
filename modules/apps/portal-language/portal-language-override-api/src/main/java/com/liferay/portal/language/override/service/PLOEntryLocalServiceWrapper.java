@@ -340,6 +340,11 @@ public class PLOEntryLocalServiceWrapper
 		return _ploEntryLocalService.getPLOEntriesCount();
 	}
 
+	@Override
+	public int getPLOEntriesCount(long companyId) {
+		return _ploEntryLocalService.getPLOEntriesCount(companyId);
+	}
+
 	/**
 	 * Returns the plo entry with the primary key.
 	 *

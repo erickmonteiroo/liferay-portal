@@ -299,6 +299,10 @@ public class PLOEntryLocalServiceUtil {
 		return getService().getPLOEntriesCount();
 	}
 
+	public static int getPLOEntriesCount(long companyId) {
+		return getService().getPLOEntriesCount(companyId);
+	}
+
 	/**
 	 * Returns the plo entry with the primary key.
 	 *

@@ -263,6 +263,9 @@ public interface PLOEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getPLOEntriesCount();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getPLOEntriesCount(long companyId);
+
 	/**
 	 * Returns the plo entry with the primary key.
 	 *
