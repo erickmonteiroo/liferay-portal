@@ -112,6 +112,7 @@ public class PLOEntryLocalServiceImpl extends PLOEntryLocalServiceBaseImpl {
 
 	@Override
 	public int getPLOEntriesCount(long companyId) {
+		return ploEntryPersistence.countByCompanyId(companyId);
 	}
 
 	@Override
