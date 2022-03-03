@@ -126,6 +126,46 @@ public class PLOEntryServiceHttp {
 		}
 	}
 
+	public static int getPLOEntriesCount(
+			HttpPrincipal httpPrincipal, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				PLOEntryServiceUtil.class, "getPLOEntriesCount",
+				_getPLOEntriesCountParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, companyId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static void setPLOEntries(
 			HttpPrincipal httpPrincipal, String key,
 			java.util.Map<java.util.Locale, String> localizationMap)
@@ -134,7 +174,7 @@ public class PLOEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				PLOEntryServiceUtil.class, "setPLOEntries",
-				_setPLOEntriesParameterTypes2);
+				_setPLOEntriesParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, key, localizationMap);
@@ -169,7 +209,9 @@ public class PLOEntryServiceHttp {
 		new Class[] {String.class};
 	private static final Class<?>[] _deletePLOEntryParameterTypes1 =
 		new Class[] {String.class, String.class};
-	private static final Class<?>[] _setPLOEntriesParameterTypes2 =
+	private static final Class<?>[] _getPLOEntriesCountParameterTypes2 =
+		new Class[] {long.class};
+	private static final Class<?>[] _setPLOEntriesParameterTypes3 =
 		new Class[] {String.class, java.util.Map.class};
 
 }

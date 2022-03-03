@@ -57,6 +57,12 @@ public class PLOEntryServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	public static int getPLOEntriesCount(long companyId)
+		throws PortalException {
+
+		return getService().getPLOEntriesCount(companyId);
+	}
+
 	public static void setPLOEntries(
 			String key, Map<java.util.Locale, String> localizationMap)
 		throws PortalException {
