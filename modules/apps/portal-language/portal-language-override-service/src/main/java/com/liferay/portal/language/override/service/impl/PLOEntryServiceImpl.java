@@ -67,6 +67,10 @@ public class PLOEntryServiceImpl extends PLOEntryServiceBaseImpl {
 
 	@Override
 	public List<PLOEntry> getPLOEntries(long companyId) throws PortalException {
+		_portalPermission.check(
+			getPermissionChecker(), PLOActionKeys.MANAGE_LANGUAGE_OVERRIDES);
+
+		return ploEntryLocalService.getPLOEntries(companyId);
 	}
 
 	@Override
