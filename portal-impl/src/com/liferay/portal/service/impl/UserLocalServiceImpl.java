@@ -60,6 +60,7 @@ import com.liferay.portal.kernel.exception.UserSmsException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.mail.MailSettingsUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
@@ -7139,9 +7140,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				emailAddress, emailAddressValidator);
 		}
 
-		String pop3User = PrefsPropsUtil.getString(
-			PropsKeys.MAIL_SESSION_MAIL_POP3_USER,
-			PropsValues.MAIL_SESSION_MAIL_POP3_USER);
+		String pop3User = MailSettingsUtil.getMailPOP3User(companyId);
 
 		if (StringUtil.equalsIgnoreCase(emailAddress, pop3User)) {
 			throw new UserEmailAddressException.MustNotBePOP3User(emailAddress);

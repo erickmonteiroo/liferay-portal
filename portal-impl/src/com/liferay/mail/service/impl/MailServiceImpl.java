@@ -22,17 +22,16 @@ import com.liferay.mail.kernel.util.Hook;
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.mail.MailSettingsUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.PropertiesUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PrefsPropsUtil;
-import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
 
@@ -140,50 +139,29 @@ public class MailServiceImpl implements IdentifiableOSGiService, MailService {
 
 		Session session = InfrastructureUtil.getMailSession();
 
-		if (!PrefsPropsUtil.getBoolean(
-				PropsKeys.MAIL_SESSION_MAIL, PropsValues.MAIL_SESSION_MAIL)) {
+		long companyId = CompanyThreadLocal.getCompanyId();
 
+		if (!MailSettingsUtil.getMailSessionMail(companyId)) {
 			_session = session;
 
 			return _session;
 		}
 
-		String advancedPropertiesString = PrefsPropsUtil.getString(
-			PropsKeys.MAIL_SESSION_MAIL_ADVANCED_PROPERTIES,
-			PropsValues.MAIL_SESSION_MAIL_ADVANCED_PROPERTIES);
-		String pop3Host = PrefsPropsUtil.getString(
-			PropsKeys.MAIL_SESSION_MAIL_POP3_HOST,
-			PropsValues.MAIL_SESSION_MAIL_POP3_HOST);
-		String pop3Password = PrefsPropsUtil.getString(
-			PropsKeys.MAIL_SESSION_MAIL_POP3_PASSWORD,
-			PropsValues.MAIL_SESSION_MAIL_POP3_PASSWORD);
-		int pop3Port = PrefsPropsUtil.getInteger(
-			PropsKeys.MAIL_SESSION_MAIL_POP3_PORT,
-			PropsValues.MAIL_SESSION_MAIL_POP3_PORT);
-		String pop3User = PrefsPropsUtil.getString(
-			PropsKeys.MAIL_SESSION_MAIL_POP3_USER,
-			PropsValues.MAIL_SESSION_MAIL_POP3_USER);
-		String smtpHost = PrefsPropsUtil.getString(
-			PropsKeys.MAIL_SESSION_MAIL_SMTP_HOST,
-			PropsValues.MAIL_SESSION_MAIL_SMTP_HOST);
-		String smtpPassword = PrefsPropsUtil.getString(
-			PropsKeys.MAIL_SESSION_MAIL_SMTP_PASSWORD,
-			PropsValues.MAIL_SESSION_MAIL_SMTP_PASSWORD);
-		int smtpPort = PrefsPropsUtil.getInteger(
-			PropsKeys.MAIL_SESSION_MAIL_SMTP_PORT,
-			PropsValues.MAIL_SESSION_MAIL_SMTP_PORT);
-		boolean smtpStartTLSEnable = PrefsPropsUtil.getBoolean(
-			PropsKeys.MAIL_SESSION_MAIL_SMTP_STARTTLS_ENABLE,
-			PropsValues.MAIL_SESSION_MAIL_SMTP_STARTTLS_ENABLE);
-		String smtpUser = PrefsPropsUtil.getString(
-			PropsKeys.MAIL_SESSION_MAIL_SMTP_USER,
-			PropsValues.MAIL_SESSION_MAIL_SMTP_USER);
-		String storeProtocol = PrefsPropsUtil.getString(
-			PropsKeys.MAIL_SESSION_MAIL_STORE_PROTOCOL,
-			PropsValues.MAIL_SESSION_MAIL_STORE_PROTOCOL);
-		String transportProtocol = PrefsPropsUtil.getString(
-			PropsKeys.MAIL_SESSION_MAIL_TRANSPORT_PROTOCOL,
-			PropsValues.MAIL_SESSION_MAIL_TRANSPORT_PROTOCOL);
+		String advancedPropertiesString =
+			MailSettingsUtil.getMailAdvancedProperties(companyId);
+		String pop3Host = MailSettingsUtil.getMailPOP3Host(companyId);
+		String pop3Password = MailSettingsUtil.getMailPOP3Password(companyId);
+		int pop3Port = MailSettingsUtil.getMailPOP3Port(companyId);
+		String pop3User = MailSettingsUtil.getMailPOP3User(companyId);
+		String smtpHost = MailSettingsUtil.getMailSMTPHost(companyId);
+		String smtpPassword = MailSettingsUtil.getMailSMTPPassword(companyId);
+		int smtpPort = MailSettingsUtil.getMailSMTPPort(companyId);
+		boolean smtpStartTLSEnable = MailSettingsUtil.getMailSMTPStartTLSEnable(
+			companyId);
+		String smtpUser = MailSettingsUtil.getMailSMTPUser(companyId);
+		String storeProtocol = MailSettingsUtil.getMailStoreProtocol(companyId);
+		String transportProtocol = MailSettingsUtil.getMailTransportProtocol(
+			companyId);
 
 		Properties properties = session.getProperties();
 

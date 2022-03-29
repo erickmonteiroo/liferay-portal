@@ -27,6 +27,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.mail.MailSettingsUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.pop.MessageListener;
@@ -42,8 +43,6 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.PermissionCheckerUtil;
@@ -100,9 +99,8 @@ public class MessageListenerImpl implements MessageListener {
 				_log.debug("Check to see if user " + from + " exists");
 			}
 
-			String pop3User = PrefsPropsUtil.getString(
-				PropsKeys.MAIL_SESSION_MAIL_POP3_USER,
-				PropsValues.MAIL_SESSION_MAIL_POP3_USER);
+			String pop3User = MailSettingsUtil.getMailPOP3User(
+				company.getCompanyId());
 
 			if (StringUtil.equalsIgnoreCase(from, pop3User)) {
 				return false;
