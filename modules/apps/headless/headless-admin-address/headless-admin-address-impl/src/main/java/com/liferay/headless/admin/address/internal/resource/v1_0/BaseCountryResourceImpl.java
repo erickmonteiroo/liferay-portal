@@ -330,6 +330,95 @@ public abstract class BaseCountryResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-address/v1.0/countries/{countryId}' -d $'{"a2": ___, "a3": ___, "active": ___, "billingAllowed": ___, "groupFilterEnabled": ___, "idd": ___, "name": ___, "number": ___, "position": ___, "shippingAllowed": ___, "subjectToVAT": ___, "title_i18n": ___, "zipRequired": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "countryId"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Country")}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.PATCH
+	@javax.ws.rs.Path("/countries/{countryId}")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public Country patchCountry(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("countryId")
+			Long countryId,
+			Country country)
+		throws Exception {
+
+		Country existingCountry = getCountry(countryId);
+
+		if (country.getA2() != null) {
+			existingCountry.setA2(country.getA2());
+		}
+
+		if (country.getA3() != null) {
+			existingCountry.setA3(country.getA3());
+		}
+
+		if (country.getActive() != null) {
+			existingCountry.setActive(country.getActive());
+		}
+
+		if (country.getBillingAllowed() != null) {
+			existingCountry.setBillingAllowed(country.getBillingAllowed());
+		}
+
+		if (country.getGroupFilterEnabled() != null) {
+			existingCountry.setGroupFilterEnabled(
+				country.getGroupFilterEnabled());
+		}
+
+		if (country.getIdd() != null) {
+			existingCountry.setIdd(country.getIdd());
+		}
+
+		if (country.getName() != null) {
+			existingCountry.setName(country.getName());
+		}
+
+		if (country.getNumber() != null) {
+			existingCountry.setNumber(country.getNumber());
+		}
+
+		if (country.getPosition() != null) {
+			existingCountry.setPosition(country.getPosition());
+		}
+
+		if (country.getShippingAllowed() != null) {
+			existingCountry.setShippingAllowed(country.getShippingAllowed());
+		}
+
+		if (country.getSubjectToVAT() != null) {
+			existingCountry.setSubjectToVAT(country.getSubjectToVAT());
+		}
+
+		if (country.getTitle_i18n() != null) {
+			existingCountry.setTitle_i18n(country.getTitle_i18n());
+		}
+
+		if (country.getZipRequired() != null) {
+			existingCountry.setZipRequired(country.getZipRequired());
+		}
+
+		preparePatch(country, existingCountry);
+
+		return putCountry(countryId, existingCountry);
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-address/v1.0/countries/{countryId}' -d $'{"a2": ___, "a3": ___, "active": ___, "billingAllowed": ___, "groupFilterEnabled": ___, "idd": ___, "name": ___, "number": ___, "position": ___, "shippingAllowed": ___, "subjectToVAT": ___, "title_i18n": ___, "zipRequired": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
@@ -631,6 +720,9 @@ public abstract class BaseCountryResourceImpl
 
 		return addAction(
 			actionName, siteId, methodName, null, permissionName, siteId);
+	}
+
+	protected void preparePatch(Country country, Country existingCountry) {
 	}
 
 	protected <T, R> List<R> transform(

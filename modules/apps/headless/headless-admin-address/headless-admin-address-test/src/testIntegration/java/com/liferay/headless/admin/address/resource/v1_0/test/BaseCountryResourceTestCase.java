@@ -766,6 +766,31 @@ public abstract class BaseCountryResourceTestCase {
 	}
 
 	@Test
+	public void testPatchCountry() throws Exception {
+		Country postCountry = testPatchCountry_addCountry();
+
+		Country randomPatchCountry = randomPatchCountry();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Country patchCountry = countryResource.patchCountry(
+			postCountry.getId(), randomPatchCountry);
+
+		Country expectedPatchCountry = postCountry.clone();
+
+		_beanUtilsBean.copyProperties(expectedPatchCountry, randomPatchCountry);
+
+		Country getCountry = countryResource.getCountry(patchCountry.getId());
+
+		assertEquals(expectedPatchCountry, getCountry);
+		assertValid(getCountry);
+	}
+
+	protected Country testPatchCountry_addCountry() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPutCountry() throws Exception {
 		Country postCountry = testPutCountry_addCountry();
 

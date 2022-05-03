@@ -77,6 +77,19 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public Country patchCountry(
+			@GraphQLName("countryId") Long countryId,
+			@GraphQLName("country") Country country)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_countryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			countryResource -> countryResource.patchCountry(
+				countryId, country));
+	}
+
+	@GraphQLField
 	public Country updateCountry(
 			@GraphQLName("countryId") Long countryId,
 			@GraphQLName("country") Country country)
