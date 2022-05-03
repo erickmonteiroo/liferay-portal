@@ -765,6 +765,29 @@ public abstract class BaseCountryResourceTestCase {
 		return testGraphQLCountry_addCountry();
 	}
 
+	@Test
+	public void testPutCountry() throws Exception {
+		Country postCountry = testPutCountry_addCountry();
+
+		Country randomCountry = randomCountry();
+
+		Country putCountry = countryResource.putCountry(
+			postCountry.getId(), randomCountry);
+
+		assertEquals(randomCountry, putCountry);
+		assertValid(putCountry);
+
+		Country getCountry = countryResource.getCountry(putCountry.getId());
+
+		assertEquals(randomCountry, getCountry);
+		assertValid(getCountry);
+	}
+
+	protected Country testPutCountry_addCountry() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected Country testGraphQLCountry_addCountry() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");

@@ -78,6 +78,11 @@ public interface CountryResource {
 
 	public Country getCountry(Long countryId) throws Exception;
 
+	public Country putCountry(Long countryId, Country country) throws Exception;
+
+	public Response putCountryBatch(String callbackURL, Object object)
+		throws Exception;
+
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
 	}
