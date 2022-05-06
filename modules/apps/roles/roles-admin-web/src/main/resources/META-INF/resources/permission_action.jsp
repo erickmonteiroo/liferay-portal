@@ -43,14 +43,7 @@ Role role = (Role)objArray[1];
 	<liferay-ui:icon-delete
 		confirmation="are-you-sure-you-want-to-remove-this-permission"
 		message="remove"
-		url="javascript:specialFunction();"
+		url='<%= "javascript:specialFunction('" + HtmlUtil.escapeJS(deletePermissionURL) + "');" %>'
 	/>
 
-	<aui:script>
-		function specialFunction() {
-			if (confirm('you sure?')) {
-				submitForm(document.specialForm, "<%= HtmlUtil.escapeJS(deletePermissionURL) %>");
-			}
-		}
-	</aui:script>
 </liferay-ui:icon-menu>

@@ -23,7 +23,15 @@ SearchContainer<PermissionDisplay> searchContainer = editRolePermissionsSummaryD
 %>
 
 <aui:form method="POST" action="#" name="specialForm">
-	<aui:input name="redirect" value"<%= currentURL %>" />
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+
+	<aui:script>
+		function specialFunction(url) {
+			if (confirm('you sure?')) {
+				submitForm(document.<portlet:namespace/>specialForm, url);
+			}
+		}
+	</aui:script>
 
 <clay:sheet>
 	<clay:sheet-header>
