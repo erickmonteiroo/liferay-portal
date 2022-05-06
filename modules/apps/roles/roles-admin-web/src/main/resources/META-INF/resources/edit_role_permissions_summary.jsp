@@ -22,6 +22,9 @@ EditRolePermissionsSummaryDisplayContext editRolePermissionsSummaryDisplayContex
 SearchContainer<PermissionDisplay> searchContainer = editRolePermissionsSummaryDisplayContext.getSearchContainer();
 %>
 
+<aui:form method="POST" action="#" name="specialForm">
+	<aui:input name="redirect" value"<%= currentURL %>" />
+
 <clay:sheet>
 	<clay:sheet-header>
 		<h3 class="sheet-title"><liferay-ui:message key="summary" /></h3>
@@ -51,3 +54,5 @@ SearchContainer<PermissionDisplay> searchContainer = editRolePermissionsSummaryD
 		</clay:sheet-footer>
 	</c:if>
 </clay:sheet>
+
+</aui:form>
