@@ -122,11 +122,18 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 				/>
 			</liferay-ui:search-container-column-text>
 
-			<c:if test="<%= !portletName.equals(myAccountPortletId) && !RoleMembershipPolicyUtil.isRoleRequired(selUser.getUserId(), role.getRoleId()) %>">
-				<liferay-ui:search-container-column-text>
-					<a class="modify-link" data-rowId="<%= role.getRoleId() %>" href="javascript:;"><%= removeRoleIcon %></a>
-				</liferay-ui:search-container-column-text>
-			</c:if>
+			<c:choose>
+               <c:when test="<%= !portletName.equals(myAccountPortletId) && !RoleMembershipPolicyUtil.isRoleRequired(selUser.getUserId(), role.getRoleId()) && !(role.getName().equals(RoleConstants.ADMINISTRATOR) && userDisplayContext.isLastAdmin()) %>">
+					<liferay-ui:search-container-column-text>
+						<a class="modify-link" data-rowId="<%= role.getRoleId() %>" href="javascript:;"><%= removeRoleIcon %></a>
+					</liferay-ui:search-container-column-text>
+               </c:when>
+               <c:otherwise>
+					<liferay-ui:search-container-column-text>
+						<a class="modify-link" data-rowId="<%= role.getRoleId() %>" ></a>
+					</liferay-ui:search-container-column-text>
+               </c:otherwise>
+            </c:choose>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator

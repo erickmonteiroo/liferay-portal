@@ -38,7 +38,9 @@ import com.liferay.portal.kernel.service.PasswordPolicyLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -310,6 +312,21 @@ public class UserDisplayContext {
 			if (_log.isWarnEnabled()) {
 				_log.warn(portalException);
 			}
+		}
+
+		return false;
+	}
+
+	public boolean isLastAdmin() throws PortalException{
+		User user = getSelectedUser();
+
+		Role administratorRole =  RoleLocalServiceUtil.getRole(user.getCompanyId(), RoleConstants.ADMINISTRATOR);
+
+		long[] administratorUserIds = UserLocalServiceUtil.getRoleUserIds(
+			administratorRole.getRoleId());
+
+		if ((administratorUserIds.length == 1)) {
+			return ArrayUtil.contains(administratorUserIds, user.getUserId());
 		}
 
 		return false;
